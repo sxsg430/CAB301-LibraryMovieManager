@@ -18,7 +18,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("0. Exit");
             Console.WriteLine("================================");
             Console.WriteLine("");
-            Console.WriteLine("Please make a selection (1-2, or 0 to exit): ");
+            Console.Write("Please make a selection (1-2, or 0 to exit): ");
             int result = int.Parse(Console.ReadLine());
             return result;
         }
@@ -32,6 +32,17 @@ namespace CAB302_LibraryMovieManager
             } else if (mainMenuResult == 1)
             {
                 Console.WriteLine("Staff Login Here");
+                Console.Write("Staff Username: ");
+                string username = Console.ReadLine();
+                Console.Write("Staff Password: ");
+                string password = Console.ReadLine();
+                if (username.Equals("staff") && password.Equals("today123"))
+                {
+                    Console.WriteLine("Success");
+                } else
+                {
+                    Console.WriteLine("Fail");
+                }
             } else if (mainMenuResult == 2)
             {
                 Console.WriteLine("User Login Here");
