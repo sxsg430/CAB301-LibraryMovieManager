@@ -39,6 +39,7 @@ namespace CAB302_LibraryMovieManager
                 if (username.Equals("staff") && password.Equals("today123"))
                 {
                     Console.WriteLine("Success");
+                    StaffMenu.StaffMainMenu();
                 } else
                 {
                     Console.WriteLine("Fail");
