@@ -25,6 +25,7 @@ namespace CAB302_LibraryMovieManager
 
         static void Main(string[] args)
         {
+            MemberCollection ListOfMembers = new MemberCollection();
             int mainMenuResult = MainMenuInterface();
             if (mainMenuResult == 0)
             {
@@ -45,7 +46,18 @@ namespace CAB302_LibraryMovieManager
                 }
             } else if (mainMenuResult == 2)
             {
-                Console.WriteLine("User Login Here");
+                Console.Write("Username: ");
+                string username = Console.ReadLine();
+                Console.Write("Password: ");
+                string password = Console.ReadLine();
+                int LoginCheck = ListOfMembers.FindMemberByUsername(username, password);
+                if (LoginCheck == -1)
+                {
+                    Console.WriteLine("Login Error");
+                } else
+                {
+                    Console.WriteLine("Login Success");
+                }
             }
             Console.ReadLine();
         }
