@@ -31,7 +31,6 @@ namespace CAB302_LibraryMovieManager
                 
             } else if (mainMenuResult == 1)
             {
-                Console.WriteLine("Staff Login Here");
                 Console.Write("Staff Username: ");
                 string username = Console.ReadLine();
                 Console.Write("Staff Password: ");
