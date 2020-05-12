@@ -8,7 +8,30 @@ namespace CAB302_LibraryMovieManager
 {
     public class StaffMenu
     {
-        public static void StaffMainMenu()
+        private static void RegisterNewUser(MemberCollection existingSet)
+        {
+            Member newMember = new Member();
+            Console.Clear();
+            Console.WriteLine("Register a new Member");
+            Console.WriteLine("=====================");
+            Console.Write("First Name: ");
+            newMember.MemberFirstName = Console.ReadLine();
+            Console.Write("Last Name: ");
+            newMember.MemberLastName = Console.ReadLine();
+            Console.Write("Address: ");
+            newMember.MemberAddress = Console.ReadLine();
+            Console.Write("Phone Number: ");
+            newMember.MemberPhoneNumber = Console.ReadLine();
+            Console.Write("Passcode: ");
+            newMember.MemberPasscode = int.Parse(Console.ReadLine());
+            existingSet.AddNewMember(newMember);
+            Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
+        }
+
+
+
+
+        public static void StaffMainMenu(MemberCollection memberSet)
         {
             Console.Clear();
             Console.WriteLine("===========Staff Menu============");
@@ -18,8 +41,12 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("4. Find a registered member's phone number");
             Console.WriteLine("0. Return to main menu");
             Console.WriteLine("=================================");
-            Console.WriteLine("Please make a selection (1-4 or 0 to return to main menu): ");
-            Console.ReadLine();
+            Console.Write("Please make a selection (1-4 or 0 to return to main menu): ");
+            int result = int.Parse(Console.ReadLine());
+            if (result == 3)
+            {
+                RegisterNewUser(memberSet);
+            }
         }
     }
 }
