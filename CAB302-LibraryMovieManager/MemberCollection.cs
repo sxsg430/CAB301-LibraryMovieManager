@@ -10,30 +10,6 @@ namespace CAB302_LibraryMovieManager
     public class MemberCollection
     {
         Member[] LibraryMembers = new Member[10]; // Limit to 10 members
-        public void AddNewMember(Member newMember)
-        {
-            LibraryMembers.Append(newMember);
-        }
-        public int FindMemberByUsername(string username, string password)
-        {
-            if (LibraryMembers[0] == null) // Catch login attempts when the member list hasn't been populated.
-            {
-                return -1;
-            } else
-            {
-                for (int i = 0; i < LibraryMembers.Length; i++)
-                {
-                    Member select = LibraryMembers[i];
-                    Console.WriteLine(i + " - " + select.MemberFirstName + " - " + select.MemberLastName);
-                    return 0;
-                    /*if (select.GetUsername().Equals(username) && select.MemberPasscode.Equals(password))
-                    {
-                        return i;
-                    }*/
-                }
-                return -1;
-            }
-        }
         public string TextPosition(int pos)
         {
             if (LibraryMembers[0] == null)
