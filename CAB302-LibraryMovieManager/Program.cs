@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace CAB302_LibraryMovieManager
 {
+    static class Globals
+    {
+        public static MemberCollection ListOfMembers = new MemberCollection();
+    }
     class Program
     {
         public static int MainMenuInterface ()
         {
             Console.Clear();
+            Console.WriteLine(Globals.ListOfMembers.TextPosition(0));
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("===========Main Menu============");
             Console.WriteLine("1. Staff Login");
@@ -23,14 +28,14 @@ namespace CAB302_LibraryMovieManager
             return result;
         }
 
-        static void Main(string[] args)
+        public static void MainMenuStart()
         {
-            MemberCollection ListOfMembers = new MemberCollection();
             int mainMenuResult = MainMenuInterface();
             if (mainMenuResult == 0)
             {
-                
-            } else if (mainMenuResult == 1)
+
+            }
+            else if (mainMenuResult == 1)
             {
                 Console.Write("Staff Username: ");
                 string username = Console.ReadLine();
@@ -39,27 +44,36 @@ namespace CAB302_LibraryMovieManager
                 if (username.Equals("staff") && password.Equals("today123"))
                 {
                     Console.WriteLine("Success");
-                    StaffMenu.StaffMainMenu(ListOfMembers);
-                } else
+                    StaffMenu.StaffMenuInit();
+                }
+                else
                 {
                     Console.WriteLine("Fail");
                 }
-            } else if (mainMenuResult == 2)
+            }
+            else if (mainMenuResult == 2)
             {
-                Console.Write("Username: ");
+                Globals.ListOfMembers.AuthenticateUser();
+                /*Console.Write("Username: ");
                 string username = Console.ReadLine();
                 Console.Write("Password: ");
                 string password = Console.ReadLine();
-                int LoginCheck = ListOfMembers.FindMemberByUsername(username, password);
+                int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
                 if (LoginCheck == -1)
                 {
                     Console.WriteLine("Login Error");
-                } else
+                }
+                else
                 {
                     Console.WriteLine("Login Success");
-                }
+                }*/
             }
             Console.ReadLine();
+        }
+        static void Main(string[] args)
+        {
+            Globals.ListOfMembers = new MemberCollection();
+            MainMenuStart();
         }
     }
 }

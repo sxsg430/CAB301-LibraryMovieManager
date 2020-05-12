@@ -8,30 +8,24 @@ namespace CAB302_LibraryMovieManager
 {
     public class StaffMenu
     {
-        private static void RegisterNewUser(MemberCollection existingSet)
+        
+
+
+
+        public static void StaffMenuInit()
         {
-            Member newMember = new Member();
-            Console.Clear();
-            Console.WriteLine("Register a new Member");
-            Console.WriteLine("=====================");
-            Console.Write("First Name: ");
-            newMember.MemberFirstName = Console.ReadLine();
-            Console.Write("Last Name: ");
-            newMember.MemberLastName = Console.ReadLine();
-            Console.Write("Address: ");
-            newMember.MemberAddress = Console.ReadLine();
-            Console.Write("Phone Number: ");
-            newMember.MemberPhoneNumber = Console.ReadLine();
-            Console.Write("Passcode: ");
-            newMember.MemberPasscode = int.Parse(Console.ReadLine());
-            existingSet.AddNewMember(newMember);
-            Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
+            int result = StaffMainMenu();
+            if (result == 3)
+            {
+                Globals.ListOfMembers.RegisterNewUser();
+                StaffMenuInit();
+            }
+            else if (result == 0)
+            {
+                Program.MainMenuStart();
+            }
         }
-
-
-
-
-        public static void StaffMainMenu(MemberCollection memberSet)
+        public static int StaffMainMenu()
         {
             Console.Clear();
             Console.WriteLine("===========Staff Menu============");
@@ -42,11 +36,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("0. Return to main menu");
             Console.WriteLine("=================================");
             Console.Write("Please make a selection (1-4 or 0 to return to main menu): ");
-            int result = int.Parse(Console.ReadLine());
-            if (result == 3)
-            {
-                RegisterNewUser(memberSet);
-            }
+            return int.Parse(Console.ReadLine());
         }
     }
 }
