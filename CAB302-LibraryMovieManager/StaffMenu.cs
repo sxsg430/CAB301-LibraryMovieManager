@@ -9,9 +9,6 @@ namespace CAB302_LibraryMovieManager
     public class StaffMenu
     {
         
-
-
-
         public static void StaffMenuInit()
         {
             int result = StaffMainMenu();
@@ -19,6 +16,30 @@ namespace CAB302_LibraryMovieManager
             {
                 Globals.ListOfMembers.RegisterNewUser();
                 StaffMenuInit();
+            } else if (result == 4)
+            {
+                Console.Clear();
+                Console.Write("Enter a Phone Number: ");
+                string phone = Console.ReadLine();
+                int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone);
+                if (memberID == -1)
+                {
+                    Console.WriteLine("This number doesn't exist.");
+                    Console.ReadLine();
+                    StaffMenuInit();
+                } else
+                {
+                    Member knownMember = Globals.ListOfMembers.GetMemberInfo(memberID);
+                    Console.Clear();
+                    Console.WriteLine("Name: " + knownMember.MemberFirstName + " " + knownMember.MemberLastName);
+                    Console.WriteLine("Address: " + knownMember.MemberAddress);
+                    Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
+                    Console.WriteLine("Username: " + knownMember.GetUsername());
+                    Console.WriteLine("Passcode :" + knownMember.MemberPasscode);
+                    Console.ReadLine();
+                    StaffMenuInit();
+
+                }
             }
             else if (result == 0)
             {

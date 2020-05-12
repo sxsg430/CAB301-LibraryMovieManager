@@ -91,7 +91,44 @@ namespace CAB302_LibraryMovieManager
             Console.Write("Password: ");
             string password = Console.ReadLine();
             Console.WriteLine(FindFirstNull());
+            /*int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
+            if (LoginCheck == -1)
+            {
+                Console.WriteLine("Login Error");
+            }
+            else
+            {
+                Console.WriteLine("Login Success");
+            }
+            */
             return 0;
+        }
+        public int SearchPhoneNumber(string phone)
+        {
+            for (int i = 0; i < LibraryMembers.Length; i++)
+            {
+                Member currentMember = LibraryMembers[i];
+                if (currentMember == null)
+                {
+                    return -1;
+                } else
+                {
+                    if (currentMember.MemberPhoneNumber == phone)
+                    {
+                        return i;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public Member GetMemberInfo(int id)
+        {
+            return LibraryMembers[id];
         }
     }
 }

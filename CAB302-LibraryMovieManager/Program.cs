@@ -33,7 +33,9 @@ namespace CAB302_LibraryMovieManager
             int mainMenuResult = MainMenuInterface();
             if (mainMenuResult == 0)
             {
-
+                Console.WriteLine("");
+                Console.Write("Exiting...");
+                Console.ReadLine();
             }
             else if (mainMenuResult == 1)
             {
@@ -54,21 +56,8 @@ namespace CAB302_LibraryMovieManager
             else if (mainMenuResult == 2)
             {
                 Globals.ListOfMembers.AuthenticateUser();
-                /*Console.Write("Username: ");
-                string username = Console.ReadLine();
-                Console.Write("Password: ");
-                string password = Console.ReadLine();
-                int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
-                if (LoginCheck == -1)
-                {
-                    Console.WriteLine("Login Error");
-                }
-                else
-                {
-                    Console.WriteLine("Login Success");
-                }*/
+                
             }
-            Console.ReadLine();
         }
         static void Main(string[] args)
         {
