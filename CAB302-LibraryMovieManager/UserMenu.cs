@@ -16,14 +16,15 @@ namespace CAB302_LibraryMovieManager
         {
             Console.Clear();
             Console.WriteLine(Globals.CurrentUser);
-            Console.WriteLine("===========User Menu============");
-            Console.WriteLine("1. Add a new movie DVD");
-            Console.WriteLine("2. Remove a movie DVD");
-            Console.WriteLine("3. Register a new Member");
-            Console.WriteLine("4. Find a registered member's phone number");
+            Console.WriteLine("===========Member Menu===========");
+            Console.WriteLine("1. Display all movies");
+            Console.WriteLine("2. Burrow a movie DVD");
+            Console.WriteLine("3. Return a movie DVD");
+            Console.WriteLine("4. List current burrowed movie DVDs");
+            Console.WriteLine("5. Display top 10 must popular movies");
             Console.WriteLine("0. Return to main menu");
             Console.WriteLine("=================================");
-            Console.Write("Please make a selection (1-4 or 0 to return to main menu): ");
+            Console.Write("Please make a selection (1-5 or 0 to return to main menu): ");
             return int.Parse(Console.ReadLine());
         }
     }
