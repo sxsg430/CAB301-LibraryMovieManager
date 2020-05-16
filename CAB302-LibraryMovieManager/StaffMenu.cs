@@ -14,42 +14,7 @@ namespace CAB302_LibraryMovieManager
             int result = StaffMainMenu();
             if (result == 1)
             {
-                Movie newMovie = new Movie();
-                Console.Clear();
-                Console.WriteLine("Available Genres: " + newMovie.ListOfGenres());
-                Console.WriteLine("Available Classification: " + newMovie.ListOfClassification());
-                Console.Write("Title: ");
-                newMovie.MovieTitle = Console.ReadLine();
-                Console.Write("Starring: ");
-                newMovie.MovieStarring = Console.ReadLine();
-                Console.Write("Director: ");
-                newMovie.MovieDirector = Console.ReadLine();
-                Console.Write("Duration: ");
-                newMovie.MovieDuration = Console.ReadLine();
-                try
-                {
-                    Console.Write("Genre: ");
-                    string inputGen = Console.ReadLine();
-                    newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
-                } catch
-                {
-                    Console.WriteLine("Invalid Genre.");
-                    Console.ReadLine();
-                }
-                try
-                {
-                    Console.Write("Classification: ");
-                    string inputClass = Console.ReadLine();
-                    newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
-                }
-                catch
-                {
-                    Console.WriteLine("Invalid Classification.");
-                    Console.ReadLine();
-                }
-                Console.Write("Total Copies: ");
-                newMovie.MovieCopies = int.Parse(Console.ReadLine());
-                Console.ReadLine();
+                Globals.ListOfMovies.AddNewMovie();
             }
             else if (result == 3)
             {

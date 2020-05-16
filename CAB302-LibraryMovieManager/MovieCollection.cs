@@ -10,16 +10,16 @@ namespace CAB302_LibraryMovieManager
     {
         private MovieNode LeftObj;
         private MovieNode RightObj;
-        private IComparable Data;
+        private Movie Data;
 
-        public MovieNode(IComparable item)
+        public MovieNode(Movie item)
         {
             this.Data = item;
             LeftObj = null;
             RightObj = null;
         }
 
-        public IComparable DataNode
+        public Movie DataNode
         {
             get { return Data; }
             set { Data = value; }
@@ -39,25 +39,15 @@ namespace CAB302_LibraryMovieManager
     class MovieCollection
     {
         public MovieNode RootElement { get; set; }
-/*        public void AddNew(IComparable item)
-        {
-            if (RootElement == null)
-            {
-                RootElement = new MovieNode(item);
-            } else
-            {
-                AddNewNonRoot(item, RootElement);
-            }
-        }*/
 
-        private void AddNew(IComparable item, MovieNode node)
+        private void AddNew(Movie item, MovieNode node)
         {
             if (RootElement == null)
             {
                 RootElement = new MovieNode(item);
             } else
             {
-                if (item.CompareTo(node.DataNode) < 0)
+                if (item.MovieTitle.CompareTo(node.DataNode.MovieTitle) == 0)
                 {
                     if (node.LeftNode == null)
                     {
@@ -81,7 +71,7 @@ namespace CAB302_LibraryMovieManager
                 }
             }
         }
-        public void AddNewInit(IComparable item)
+        public void AddNewInit(Movie item)
         {
             AddNew(item, RootElement);
         }
@@ -100,6 +90,60 @@ namespace CAB302_LibraryMovieManager
                 Console.Write(first.DataNode);
                 InOrderTraverse(first.RightNode);
             }
+        }
+
+
+
+        public void AddNewMovie()
+        {
+            Movie newMovie = new Movie();
+            Console.Clear();
+            Console.WriteLine("Available Genres: " + newMovie.ListOfGenres());
+            Console.WriteLine("Available Classification: " + newMovie.ListOfClassification());
+            Console.Write("Title: ");
+            newMovie.MovieTitle = Console.ReadLine();
+            Console.Write("Starring: ");
+            newMovie.MovieStarring = Console.ReadLine();
+            Console.Write("Director: ");
+            newMovie.MovieDirector = Console.ReadLine();
+            Console.Write("Duration: ");
+            newMovie.MovieDuration = Console.ReadLine();
+            try
+            {
+                Console.Write("Genre: ");
+                string inputGen = Console.ReadLine();
+                newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
+            }
+            catch
+            {
+                Console.WriteLine("Invalid Genre.");
+                Console.ReadLine();
+            }
+            try
+            {
+                Console.Write("Classification: ");
+                string inputClass = Console.ReadLine();
+                newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
+            }
+            catch
+            {
+                Console.WriteLine("Invalid Classification.");
+                Console.ReadLine();
+            }
+            Console.Write("Total Copies: ");
+            newMovie.MovieCopies = int.Parse(Console.ReadLine());
+            try
+            {
+                AddNewInit(newMovie);
+                Console.WriteLine("Add Successful");
+            } catch
+            {
+                Console.WriteLine("Add Failed");
+            }
+            
+
+            Console.ReadLine();
+            StaffMenu.StaffMenuInit();
         }
     }
 }
