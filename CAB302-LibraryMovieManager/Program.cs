@@ -9,6 +9,7 @@ namespace CAB302_LibraryMovieManager
     static class Globals
     {
         public static MemberCollection ListOfMembers = new MemberCollection();
+        public static MovieCollection ListOfMovies = new MovieCollection();
         public static int CurrentUser = -1;
     }
     class Program
@@ -17,6 +18,10 @@ namespace CAB302_LibraryMovieManager
         {
             Console.Clear();
             Console.WriteLine(Globals.ListOfMembers.TextPosition(0));
+            Globals.ListOfMovies.AddNewInit('C');
+            Globals.ListOfMovies.AddNewInit('Q');
+            Globals.ListOfMovies.AddNewInit('A');
+            Globals.ListOfMovies.OrderTransverseInit();
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("===========Main Menu============");
             Console.WriteLine("1. Staff Login");
@@ -72,6 +77,7 @@ namespace CAB302_LibraryMovieManager
         static void Main(string[] args)
         {
             Globals.ListOfMembers = new MemberCollection();
+            Globals.ListOfMovies = new MovieCollection();
             MainMenuStart();
         }
     }
