@@ -25,11 +25,13 @@ namespace CAB302_LibraryMovieManager
                 {
                     Member select = LibraryMembers[i];
                     Console.WriteLine(i + " - " + select.MemberFirstName + " - " + select.MemberLastName);
-                    return 0;
-                    /*if (select.GetUsername().Equals(username) && select.MemberPasscode.Equals(password))
-                    {
+                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password)) {
+                        Console.WriteLine(i);
                         return i;
-                    }*/
+                    } else
+                    {
+                        continue;
+                    }
                 }
                 return -1;
             }
@@ -90,18 +92,9 @@ namespace CAB302_LibraryMovieManager
             string username = Console.ReadLine();
             Console.Write("Password: ");
             string password = Console.ReadLine();
-            Console.WriteLine(FindFirstNull());
-            /*int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
-            if (LoginCheck == -1)
-            {
-                Console.WriteLine("Login Error");
-            }
-            else
-            {
-                Console.WriteLine("Login Success");
-            }
-            */
-            return 0;
+
+            int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
+            return LoginCheck;
         }
         public int SearchPhoneNumber(string phone)
         {

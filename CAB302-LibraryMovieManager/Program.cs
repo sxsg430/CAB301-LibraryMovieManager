@@ -9,6 +9,7 @@ namespace CAB302_LibraryMovieManager
     static class Globals
     {
         public static MemberCollection ListOfMembers = new MemberCollection();
+        public static int CurrentUser = -1;
     }
     class Program
     {
@@ -55,7 +56,16 @@ namespace CAB302_LibraryMovieManager
             }
             else if (mainMenuResult == 2)
             {
-                Globals.ListOfMembers.AuthenticateUser();
+                int loginResult = Globals.ListOfMembers.AuthenticateUser();
+                if (loginResult != -1)
+                {
+                    Globals.CurrentUser = loginResult;
+                    UserMenu.UserMenuInit();
+                } else
+                {
+                    Console.WriteLine("Login Error. Credentials may be incorrect.");
+                    Console.ReadLine();
+                }
                 
             }
         }

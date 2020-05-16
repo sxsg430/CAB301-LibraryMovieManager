@@ -35,7 +35,7 @@ namespace CAB302_LibraryMovieManager
                     Console.WriteLine("Address: " + knownMember.MemberAddress);
                     Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
                     Console.WriteLine("Username: " + knownMember.GetUsername());
-                    Console.WriteLine("Passcode :" + knownMember.MemberPasscode);
+                    Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
                     Console.ReadLine();
                     StaffMenuInit();
 
