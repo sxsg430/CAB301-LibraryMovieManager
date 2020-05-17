@@ -76,18 +76,26 @@ namespace CAB302_LibraryMovieManager
             AddNew(item, RootElement);
         }
 
+        public string[] OrderTransverseTitleArray()
+        {
+            string[] input = Globals.currentElementsOrder.Split('<');
+            return input;
+        }
+
         public void OrderTransverseInit()
         {
-            Console.Write("InOrder: ");
+            //Console.Write("InOrder: ");
             InOrderTraverse(RootElement);
-            Console.WriteLine();
+            //Console.Write(OrderTransverseAsArray());
+            //Console.WriteLine();
         }
         private void InOrderTraverse(MovieNode first)
         {
             if (first != null)
             {
+                Globals.currentElementsOrder = "";
                 InOrderTraverse(first.LeftNode);
-                Console.Write(first.DataNode);
+                Globals.currentElementsOrder = Globals.currentElementsOrder + first.DataNode.MovieTitle + "<";
                 InOrderTraverse(first.RightNode);
             }
         }
