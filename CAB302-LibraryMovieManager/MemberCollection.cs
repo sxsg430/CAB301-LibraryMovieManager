@@ -10,10 +10,14 @@ namespace CAB302_LibraryMovieManager
     public class MemberCollection
     {
         Member[] LibraryMembers = new Member[10]; // Limit to 10 members
+
+        // Accept a Member and append it to the existing array
         public void AddNewMember(Member newMember)
         {
             LibraryMembers.Append(newMember);
         }
+
+        // Search the Array for a given username. If the username is found, check to see if the password matches and return the user array position if true.
         public int FindMemberByUsername(string username, string password)
         {
             if (LibraryMembers[0] == null) // Catch login attempts when the member list hasn't been populated.
@@ -21,12 +25,10 @@ namespace CAB302_LibraryMovieManager
                 return -1;
             } else
             {
-                for (int i = 0; i < LibraryMembers.Length; i++)
+                for (int i = 0; i < LibraryMembers.Length; i++) // Iterate over members in array
                 {
                     Member select = LibraryMembers[i];
-                    Console.WriteLine(i + " - " + select.MemberFirstName + " - " + select.MemberLastName);
-                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password)) {
-                        Console.WriteLine(i);
+                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password)) { // If the current member's username and passcode match the ones provided return the position in the array. Continue otherwise.
                         return i;
                     } else
                     {
@@ -36,9 +38,10 @@ namespace CAB302_LibraryMovieManager
                 return -1;
             }
         }
+        // DEBUG CODE: Returns the username of the given Member at the position, NULL if there is no user in the position.
         public string TextPosition(int pos)
         {
-            if (LibraryMembers[0] == null)
+            if (LibraryMembers[pos] == null)
             {
                 return "NULL";
             } else
@@ -47,13 +50,10 @@ namespace CAB302_LibraryMovieManager
             }
             
         }
-        public int SetLength()
-        {
-            return LibraryMembers.Length;
-        }
+        // Finds the first null value in the array of members. Null signifies no user in the slot so it should be overwritten.
         private int FindFirstNull()
         {
-            for (int i = 0; i < LibraryMembers.Length; i++)
+            for (int i = 0; i < LibraryMembers.Length; i++) // For each entry in the array, if it's contents in null return its ID.
             {
                 if (LibraryMembers[i] == null)
                 {
@@ -66,6 +66,7 @@ namespace CAB302_LibraryMovieManager
             }
             return -1;
         }
+        // Form for taking in user input and registering a new user.
         public void RegisterNewUser()
         {
             Member newMember = new Member();
@@ -86,6 +87,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
         }
         
+        // Authenticates a user by taking in a username and password and sending them to the function which scans the array for matching credentials.
         public int AuthenticateUser()
         {
             Console.Write("Username: ");
@@ -96,6 +98,8 @@ namespace CAB302_LibraryMovieManager
             int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
             return LoginCheck;
         }
+
+        // Searches the array for a Member object containing a specific phone number, returns its position in the array if one is found.
         public int SearchPhoneNumber(string phone)
         {
             for (int i = 0; i < LibraryMembers.Length; i++)
@@ -119,6 +123,7 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
+        // Returns a Member object from the given position in the array.
         public Member GetMemberInfo(int id)
         {
             return LibraryMembers[id];

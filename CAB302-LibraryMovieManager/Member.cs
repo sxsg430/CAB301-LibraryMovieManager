@@ -17,7 +17,7 @@ namespace CAB302_LibraryMovieManager
         public int MemberPasscode { get; set; }
         public string GetUsername()
         {
-            return MemberLastName + MemberFirstName;
+            return MemberLastName + MemberFirstName; // Combine Last and First names for the appropriate username structure.
         }
     }
 }
