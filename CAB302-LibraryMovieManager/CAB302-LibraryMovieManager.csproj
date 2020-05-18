@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugMode.cs" />
     <Compile Include="Member.cs" />
     <Compile Include="MemberCollection.cs" />
     <Compile Include="Movie.cs" />

@@ -40,7 +40,7 @@ namespace CAB302_LibraryMovieManager
     class MovieCollection
     {
         public MovieNode RootElement { get; set; }
-        Movie[] MovieList = new Movie[10];
+        public Movie[] MovieList = new Movie[10];
 
         private void AddNew(Movie item, MovieNode node)
         {

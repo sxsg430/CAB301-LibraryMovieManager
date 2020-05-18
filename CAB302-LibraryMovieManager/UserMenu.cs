@@ -11,6 +11,13 @@ namespace CAB302_LibraryMovieManager
         public static void UserMenuInit()
         {
             int result = UserMainMenu();
+            if (result == 1)
+            {
+                ListAllMovies();
+            } else if (result == 0)
+            {
+                Program.MainMenuStart();
+            }
         }
         public static int UserMainMenu()
         {
@@ -26,6 +33,23 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("=================================");
             Console.Write("Please make a selection (1-5 or 0 to return to main menu): ");
             return int.Parse(Console.ReadLine());
+        }
+
+        public static void ListAllMovies()
+        {
+            Console.Clear();
+            Console.WriteLine("Available Movies:");
+            Console.WriteLine("-----------------");
+            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++)
+            {
+                if (Globals.ListOfMovies.MovieList[i] != null)
+                {
+                    Console.WriteLine(i + " - " + Globals.ListOfMovies.MovieList[i].MovieTitle);
+                }
+                
+            }
+            
+            Console.ReadLine();
         }
     }
 }

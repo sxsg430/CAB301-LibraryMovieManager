@@ -14,7 +14,7 @@ namespace CAB302_LibraryMovieManager
         // Accept a Member and append it to the existing array
         public void AddNewMember(Member newMember)
         {
-            LibraryMembers.Append(newMember);
+            LibraryMembers[FindFirstNull()] = newMember;
         }
 
         // Search the Array for a given username. If the username is found, check to see if the password matches and return the user array position if true.
@@ -83,7 +83,7 @@ namespace CAB302_LibraryMovieManager
             newMember.MemberPhoneNumber = Console.ReadLine();
             Console.Write("Passcode: ");
             newMember.MemberPasscode = int.Parse(Console.ReadLine());
-            LibraryMembers[FindFirstNull()] = newMember;
+            AddNewMember(newMember);
             Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
         }
         
