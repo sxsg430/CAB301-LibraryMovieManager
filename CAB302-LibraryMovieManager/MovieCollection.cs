@@ -11,6 +11,7 @@ namespace CAB302_LibraryMovieManager
         private MovieNode LeftObj;
         private MovieNode RightObj;
         private Movie Data;
+        
 
         public MovieNode(Movie item)
         {
@@ -39,6 +40,7 @@ namespace CAB302_LibraryMovieManager
     class MovieCollection
     {
         public MovieNode RootElement { get; set; }
+        Movie[] MovieList = new Movie[10];
 
         private void AddNew(Movie item, MovieNode node)
         {
@@ -76,26 +78,17 @@ namespace CAB302_LibraryMovieManager
             AddNew(item, RootElement);
         }
 
-        public string[] OrderTransverseTitleArray()
-        {
-            string[] input = Globals.currentElementsOrder.Split('<');
-            return input;
-        }
-
         public void OrderTransverseInit()
         {
-            //Console.Write("InOrder: ");
             InOrderTraverse(RootElement);
-            //Console.Write(OrderTransverseAsArray());
-            //Console.WriteLine();
+            
         }
         private void InOrderTraverse(MovieNode first)
         {
             if (first != null)
             {
-                Globals.currentElementsOrder = "";
                 InOrderTraverse(first.LeftNode);
-                Globals.currentElementsOrder = Globals.currentElementsOrder + first.DataNode.MovieTitle + "<";
+                MovieList[FindFirstNull()] = first.DataNode;
                 InOrderTraverse(first.RightNode);
             }
         }
@@ -153,5 +146,42 @@ namespace CAB302_LibraryMovieManager
             Console.ReadLine();
             StaffMenu.StaffMenuInit();
         }
+
+        // Finds the first null value in the array of members. Null signifies no user in the slot so it should be overwritten.
+        private int FindFirstNull()
+        {
+            for (int i = 0; i < MovieList.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+            {
+                if (MovieList[i] == null)
+                {
+                    return i;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return -1;
+        }
+
+        public void prepareArray()
+        {
+            MovieList.Initialize();
+        }
+
+        // DEBUG CODE: Returns the username of the given Member at the position, NULL if there is no user in the position.
+        public string TextPosition(int pos)
+        {
+            if (MovieList[pos] == null)
+            {
+                return "NULL";
+            }
+            else
+            {
+                return MovieList[pos].MovieTitle;
+            }
+
+        }
+
     }
 }

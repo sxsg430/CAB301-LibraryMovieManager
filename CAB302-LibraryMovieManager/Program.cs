@@ -11,7 +11,7 @@ namespace CAB302_LibraryMovieManager
         public static MemberCollection ListOfMembers = new MemberCollection();
         public static MovieCollection ListOfMovies = new MovieCollection();
         public static int CurrentUser = -1;
-        public static string currentElementsOrder = "PLACEHOLDER<";
+        
     }
     class Program
     {
@@ -20,7 +20,7 @@ namespace CAB302_LibraryMovieManager
             Console.Clear();
             Console.WriteLine(Globals.ListOfMembers.TextPosition(0));
             Globals.ListOfMovies.OrderTransverseInit();
-            Console.WriteLine(Globals.ListOfMovies.OrderTransverseTitleArray()[0]);
+            Console.WriteLine(Globals.ListOfMovies.TextPosition(0));
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("===========Main Menu============");
             Console.WriteLine("1. Staff Login");
@@ -77,6 +77,7 @@ namespace CAB302_LibraryMovieManager
         {
             Globals.ListOfMembers = new MemberCollection();
             Globals.ListOfMovies = new MovieCollection();
+            Globals.ListOfMovies.prepareArray();
             MainMenuStart();
         }
     }
