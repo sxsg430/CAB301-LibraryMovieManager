@@ -8,6 +8,7 @@ namespace CAB302_LibraryMovieManager
 {
     static class Globals
     {
+        public static int DebugMode = 1; // Controls Debug Mode. 1 fills users and movies for testing.
         public static MemberCollection ListOfMembers = new MemberCollection();
         public static MovieCollection ListOfMovies = new MovieCollection();
         public static int CurrentUser = -1;
@@ -78,6 +79,11 @@ namespace CAB302_LibraryMovieManager
             Globals.ListOfMembers = new MemberCollection();
             Globals.ListOfMovies = new MovieCollection();
             Globals.ListOfMovies.prepareArray();
+            if (Globals.DebugMode == 1)
+            {
+                DebugMode.FillDebugMembers();
+                DebugMode.FillDebugMovies();
+            }
             MainMenuStart();
         }
     }
