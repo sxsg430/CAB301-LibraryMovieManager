@@ -25,12 +25,14 @@ namespace CAB302_LibraryMovieManager
                 return -1;
             } else
             {
-                for (int i = 0; i < LibraryMembers.Length; i++) // Iterate over members in array
+                for (int i = 0; i < FindFirstNull(); i++) // Iterate over members in array
                 {
                     Member select = LibraryMembers[i];
-                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password)) { // If the current member's username and passcode match the ones provided return the position in the array. Continue otherwise.
+                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password))
+                    { // If the current member's username and passcode match the ones provided return the position in the array. Continue otherwise.
                         return i;
-                    } else
+                    }
+                    else
                     {
                         continue;
                     }
