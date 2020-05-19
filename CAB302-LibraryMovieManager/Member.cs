@@ -37,6 +37,12 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
+        public string[] CurrentLoans()
+        {
+            string[] filteredLoans = MemberLoans.Where(x => x != null).ToArray();
+            return filteredLoans;
+        }
+
         // Add a new title to the user's loan list.
         public void AddMovieLoan(string title)
         {

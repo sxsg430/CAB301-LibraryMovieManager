@@ -15,7 +15,30 @@ namespace CAB302_LibraryMovieManager
             if (result == 1)
             {
                 ListAllMovies();
-            } else if (result == 0)
+                Console.ReadLine();
+                UserMenuInit();
+            }
+            else if (result == 2)
+            {
+                BorrowNewMovie();
+                Console.ReadLine();
+                UserMenuInit();
+            }
+            else if (result == 3)
+            {
+                // Placeholder
+            }
+            else if (result == 4)
+            {
+                ListBorrowedMovies();
+                Console.ReadLine();
+                UserMenuInit();
+            }
+            else if (result == 5)
+            {
+                // Placeholder
+            }
+            else if (result == 0)
             {
                 Program.MainMenuStart();
             }
@@ -28,7 +51,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine(Globals.CurrentUser);
             Console.WriteLine("===========Member Menu===========");
             Console.WriteLine("1. Display all movies");
-            Console.WriteLine("2. Burrow a movie DVD");
+            Console.WriteLine("2. Borrow a movie DVD");
             Console.WriteLine("3. Return a movie DVD");
             Console.WriteLine("4. List current burrowed movie DVDs");
             Console.WriteLine("5. Display top 10 must popular movies");
@@ -52,8 +75,32 @@ namespace CAB302_LibraryMovieManager
                 }
                 
             }
-            
-            Console.ReadLine();
+        }
+
+        public static void BorrowNewMovie()
+        {
+            ListAllMovies();
+            Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
+            Console.WriteLine("You currently have " + user.CurrentLoans().Length+"/10 loans used.");
+            Console.Write("Please enter the ID of the movie you would like to borrow: ");
+            int response = int.Parse(Console.ReadLine());
+            user.AddMovieLoan(Globals.ListOfMovies.MovieList[response].MovieTitle);
+        }
+
+        public static void ListBorrowedMovies()
+        {
+            Console.Clear();
+            Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
+            Console.WriteLine("Borrowed Movies:");
+            Console.WriteLine("----------------");
+            for (int i = 0; i < user.CurrentLoans().Length; i++)
+            {
+                if (user.CurrentLoans()[i] != null)
+                {
+                    Console.WriteLine(i + " - " + user.CurrentLoans()[i]);
+                }
+
+            }
         }
     }
 }

@@ -128,5 +128,10 @@ namespace CAB302_LibraryMovieManager
         {
             return LibraryMembers[id];
         }
+
+        public void ReplaceMemberInfo(int id, Member memberInfo)
+        {
+            LibraryMembers[id] = memberInfo;
+        }
     }
 }
