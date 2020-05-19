@@ -99,6 +99,69 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
+        // Iterate over the BST and remove a specific movie element.
+        public void RemoveMovie(Movie item)
+        {
+            MovieNode RootNode = RootElement; // Roto Node
+            MovieNode ParentNode = null; // Parent of Root. Initially set to null.
+            while ((RootNode != null) && (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) != 0)) // While the Root Node isn't empty and the provided Movie's title doesn't equal the root one, continue loop.
+            {
+                ParentNode = RootNode;
+                if (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) < 0) // If the provided title is earlier in the sequence than the root node, update RootNode to its Left Node. Otherwise update to Right.
+                    RootNode = RootNode.LeftNode;
+                else
+                    RootNode = RootNode.RightNode;
+            }
+
+            if (RootNode != null) // If RootNode isn't null (search ran successfully), continue.
+            {
+                if ((RootNode.LeftNode != null) && (RootNode.RightNode != null)) // If both nodes on the current root aren't empty, run the below code.
+                {
+                    if (RootNode.LeftNode.RightNode == null) // If the Right node of the Root's current Left node is empty, update the appropriate variables.
+                    {
+                        RootNode.DataNode = RootNode.LeftNode.DataNode;
+                        RootNode.LeftNode = RootNode.LeftNode.LeftNode;
+                    }
+                    else
+                    {
+                        MovieNode LNode = RootNode.LeftNode;
+                        MovieNode LNodeParent = RootNode; // Set the Parent of Left Node to current Root Node
+                        while (LNode.RightNode != null) // While the right node of the current left node is null, reassign the parent node to the current left node and the Left Node to the current one's right node.
+                        {
+                            LNodeParent = LNode;
+                            LNode = LNode.RightNode;
+                        }
+                        RootNode.DataNode = LNode.DataNode; // Update the root's contents to the contents of the current Left Node
+                        LNodeParent.RightNode = LNode.LeftNode; // Update the parent of the current Left Node's right branch to the contents of the left node.
+                    }
+                }
+                else
+                {
+                    MovieNode ChildNode;
+                    if (RootNode.LeftNode != null) // If the left node of the root isn't null, assign the child node to it. Otherwise use Right
+                        ChildNode = RootNode.LeftNode;
+                    else
+                        ChildNode = RootNode.RightNode;
+
+                    if (RootNode == RootElement) // If the Root Node equals the one set in the main collection, reassign it to the Child Node.
+                        RootElement = ChildNode;
+                    else // Otherwise if the Root Node is the same as the parent's left, assign the parent's left to the Child. Otherwise assign the right.
+                    {
+                        if (RootNode == ParentNode.LeftNode)
+                            ParentNode.LeftNode = ChildNode;
+                        else
+                            ParentNode.RightNode = ChildNode;
+                    }
+                }
+
+            }
+        }
+
+
+
+
+
+
 
         // Adds New Movie. Creates a new movie object and accepts user input to fill its options.
         public void AddNewMovie()
