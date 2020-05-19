@@ -9,19 +9,21 @@ namespace CAB302_LibraryMovieManager
     static class Globals
     {
         public static int DebugMode = 1; // Controls Debug Mode. 1 fills users and movies for testing.
-        public static MemberCollection ListOfMembers = new MemberCollection();
-        public static MovieCollection ListOfMovies = new MovieCollection();
-        public static int CurrentUser = -1;
+        public static MemberCollection ListOfMembers = new MemberCollection(); // Collection of Members
+        public static MovieCollection ListOfMovies = new MovieCollection(); // Collection of Movies
+        public static int CurrentUser = -1; // Indicator of the current user. Simplifies accessing user data.
         
     }
     class Program
     {
+        // Main Menu. Displays options, takes and returns the user's input.
         public static int MainMenuInterface ()
         {
+            Globals.CurrentUser = -1; // Reset CurrentUser to -1. If this menu is open, no user should be logged in.
             Console.Clear();
-            Console.WriteLine(Globals.ListOfMembers.TextPosition(0));
-            Globals.ListOfMovies.OrderTransverseInit();
-            Console.WriteLine(Globals.ListOfMovies.TextPosition(0));
+            Console.WriteLine(Globals.ListOfMembers.TextPosition(0)); // DEBUG CODE
+            Globals.ListOfMovies.OrderTransverseInit(); // DEBUG CODE
+            Console.WriteLine(Globals.ListOfMovies.TextPosition(0)); // DEBUG CODE
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("===========Main Menu============");
             Console.WriteLine("1. Staff Login");
@@ -34,6 +36,7 @@ namespace CAB302_LibraryMovieManager
             return result;
         }
 
+        // Starts the main menu and handles the results from the user's input.
         public static void MainMenuStart()
         {
             int mainMenuResult = MainMenuInterface();
@@ -74,6 +77,8 @@ namespace CAB302_LibraryMovieManager
                 
             }
         }
+
+        // Init Function, delcares the Arrays. If DebugMode is enabled, it calls the functions to fill the arrays with example content and then starts the Main Menu.
         static void Main(string[] args)
         {
             Globals.ListOfMembers = new MemberCollection();

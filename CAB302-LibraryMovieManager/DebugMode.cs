@@ -8,12 +8,13 @@ namespace CAB302_LibraryMovieManager
 {
     class DebugMode
     {
+        // Generate some example users and add them to the member list for testing purposes.
         public static void FillDebugMembers()
         {
             Member member1 = new Member();
             member1.MemberFirstName = "User";
             member1.MemberLastName = "Demo1";
-            member1.MemberPhoneNumber = "01001010";
+            member1.MemberPhoneNumber = "12";
             member1.MemberAddress = "Example Addr 1";
             member1.MemberPasscode = 1111;
             Globals.ListOfMembers.AddNewMember(member1);
@@ -21,12 +22,12 @@ namespace CAB302_LibraryMovieManager
             Member member2 = new Member();
             member2.MemberFirstName = "User";
             member2.MemberLastName = "Demo2";
-            member2.MemberPhoneNumber = "01001010";
+            member2.MemberPhoneNumber = "123";
             member2.MemberAddress = "Example Addr 2";
             member2.MemberPasscode = 1111;
             Globals.ListOfMembers.AddNewMember(member2);
         }
-
+        // Generate some example movies and add them to the movies list for testing purposes.
         public static void FillDebugMovies()
         {
             Movie movie1 = new Movie();

@@ -38,6 +38,7 @@ namespace CAB302_LibraryMovieManager
         public Genre MovieGenre { get; set; }
         public Classification MovieRating { get; set; }
         public int MovieCopies { get; set; }
+        // Obtain list of genres for displaying to users.
         public string ListOfGenres()
         {
             string genres = "";
@@ -47,6 +48,7 @@ namespace CAB302_LibraryMovieManager
             }
             return genres;
         }
+        // Obtain list of rating classifications for displaying to users.
         public string ListOfClassification()
         {
             string genres = "";

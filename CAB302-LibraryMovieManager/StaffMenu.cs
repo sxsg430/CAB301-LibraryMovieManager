@@ -8,7 +8,7 @@ namespace CAB302_LibraryMovieManager
 {
     public class StaffMenu
     {
-        
+        // Inits staff menu and handles its input results.
         public static void StaffMenuInit()
         {
             int result = StaffMainMenu();
@@ -23,33 +23,15 @@ namespace CAB302_LibraryMovieManager
             } else if (result == 4)
             {
                 Console.Clear();
-                Console.Write("Enter a Phone Number: ");
-                string phone = Console.ReadLine();
-                int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone);
-                if (memberID == -1)
-                {
-                    Console.WriteLine("This number doesn't exist.");
-                    Console.ReadLine();
-                    StaffMenuInit();
-                } else
-                {
-                    Member knownMember = Globals.ListOfMembers.GetMemberInfo(memberID);
-                    Console.Clear();
-                    Console.WriteLine("Name: " + knownMember.MemberFirstName + " " + knownMember.MemberLastName);
-                    Console.WriteLine("Address: " + knownMember.MemberAddress);
-                    Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
-                    Console.WriteLine("Username: " + knownMember.GetUsername());
-                    Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
-                    Console.ReadLine();
-                    StaffMenuInit();
-
-                }
+                SearchPhoneNumber();
             }
             else if (result == 0)
             {
                 Program.MainMenuStart();
             }
         }
+
+        // Draws the staff menu.
         public static int StaffMainMenu()
         {
             Console.Clear();
@@ -62,6 +44,32 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("=================================");
             Console.Write("Please make a selection (1-4 or 0 to return to main menu): ");
             return int.Parse(Console.ReadLine());
+        }
+        // Asks the user to provide a phone number and searches the Array to see if a user has it. If it finds one, it prints out the info about the user.
+        public static void SearchPhoneNumber()
+        {
+            Console.Write("Enter a Phone Number: ");
+            string phone = Console.ReadLine();
+            int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone);
+            if (memberID == -1)
+            {
+                Console.WriteLine("This number doesn't exist.");
+                Console.ReadLine();
+                StaffMenuInit();
+            }
+            else
+            {
+                Member knownMember = Globals.ListOfMembers.GetMemberInfo(memberID);
+                Console.Clear();
+                Console.WriteLine("Name: " + knownMember.MemberFirstName + " " + knownMember.MemberLastName);
+                Console.WriteLine("Address: " + knownMember.MemberAddress);
+                Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
+                Console.WriteLine("Username: " + knownMember.GetUsername());
+                Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
+                Console.ReadLine();
+                StaffMenuInit();
+
+            }
         }
     }
 }

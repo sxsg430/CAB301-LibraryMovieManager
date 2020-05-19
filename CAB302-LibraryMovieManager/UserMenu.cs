@@ -8,6 +8,7 @@ namespace CAB302_LibraryMovieManager
 {
     class UserMenu
     {
+        // Init user menu.
         public static void UserMenuInit()
         {
             int result = UserMainMenu();
@@ -19,6 +20,8 @@ namespace CAB302_LibraryMovieManager
                 Program.MainMenuStart();
             }
         }
+
+        // Display user menu.
         public static int UserMainMenu()
         {
             Console.Clear();
@@ -35,6 +38,7 @@ namespace CAB302_LibraryMovieManager
             return int.Parse(Console.ReadLine());
         }
 
+        // Generate a list of all movies currently available in the Movie Collection.
         public static void ListAllMovies()
         {
             Console.Clear();

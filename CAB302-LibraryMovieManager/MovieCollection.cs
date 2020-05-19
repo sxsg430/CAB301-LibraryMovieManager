@@ -40,61 +40,67 @@ namespace CAB302_LibraryMovieManager
     class MovieCollection
     {
         public MovieNode RootElement { get; set; }
-        public Movie[] MovieList = new Movie[10];
+        public Movie[] MovieList = new Movie[20]; // 20 movie max for testing.
 
+        // Add New Movie to the BST.
         private void AddNew(Movie item, MovieNode node)
         {
             if (RootElement == null)
             {
-                RootElement = new MovieNode(item);
+                RootElement = new MovieNode(item); // If the root element is null, construct a node with the given movie and write to it.
             } else
             {
-                if (item.MovieTitle.CompareTo(node.DataNode.MovieTitle) == 0)
+                if (item.MovieTitle.CompareTo(node.DataNode.MovieTitle) < 0) // If String.CompareTo returns less than 0 when comparing the passed movie's title vs the one in the node. Continue in Left branch.
                 {
-                    if (node.LeftNode == null)
+                    if (node.LeftNode == null) // If the left Node of the provided node is empty, set it to the provided movie.
                     {
                         node.LeftNode = new MovieNode(item);
                     }
                     else
                     {
-                        AddNew(item, node.LeftNode);
+                        AddNew(item, node.LeftNode); // Otherwise, recursively call AddNew again with the same movie and the left node.
                     }
                 }
                 else
                 {
-                    if (node.RightNode == null)
+                    if (node.RightNode == null) // If the right Node of the provided node is empty, set it to the provided movie.
                     {
                         node.RightNode = new MovieNode(item);
                     }
                     else
                     {
-                        AddNew(item, node.RightNode);
+                        AddNew(item, node.RightNode); // Otherwise, recursively call AddNew again with the same movie and the right node.
                     }
                 }
             }
         }
+
+        // Wrapper function for AddNew. Calls AddNew with the provided Movie and the RootElement.
         public void AddNewInit(Movie item)
         {
             AddNew(item, RootElement);
         }
 
+        // Wrapper function for InOrderTransverse. Passes InOrderTransverse the root node.
         public void OrderTransverseInit()
         {
             InOrderTraverse(RootElement);
             
         }
+
+        // Completes an In Order Transverse on the BST.
         private void InOrderTraverse(MovieNode first)
         {
-            if (first != null)
+            if (first != null) // If the provided node isn't null, continue.
             {
-                InOrderTraverse(first.LeftNode);
-                MovieList[FindFirstNull()] = first.DataNode;
-                InOrderTraverse(first.RightNode);
+                InOrderTraverse(first.LeftNode); // Recursively run InOrder on the left node.
+                MovieList[FindFirstNull()] = first.DataNode; // Write the node's data to the first null object in the movie list.
+                InOrderTraverse(first.RightNode); // Recursively run InOrder on the right node.
             }
         }
 
 
-
+        // Adds New Movie. Creates a new movie object and accepts user input to fill its options.
         public void AddNewMovie()
         {
             Movie newMovie = new Movie();
@@ -164,6 +170,7 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
+        // Clean and prepare the array. Unsure if required but at one stage the code needed it.
         public void prepareArray()
         {
             MovieList.Initialize();
