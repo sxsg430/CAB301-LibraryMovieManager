@@ -83,6 +83,7 @@ namespace CAB302_LibraryMovieManager
             newMember.MemberPhoneNumber = Console.ReadLine();
             Console.Write("Passcode: ");
             newMember.MemberPasscode = int.Parse(Console.ReadLine());
+            // TODO: Trim PWD to 4 int
             AddNewMember(newMember);
             Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
         }

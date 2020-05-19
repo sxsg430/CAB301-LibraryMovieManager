@@ -26,7 +26,9 @@ namespace CAB302_LibraryMovieManager
             }
             else if (result == 3)
             {
-                // Placeholder
+                ReturnMovie();
+                Console.ReadLine();
+                UserMenuInit();
             }
             else if (result == 4)
             {
@@ -80,11 +82,32 @@ namespace CAB302_LibraryMovieManager
         public static void BorrowNewMovie()
         {
             ListAllMovies();
+            // TODO: Handle user trying to borrow a movie multiple times.
+            // TODO: Update the Movie's Copy Count
             Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
-            Console.WriteLine("You currently have " + user.CurrentLoans().Length+"/10 loans used.");
+            Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
             Console.Write("Please enter the ID of the movie you would like to borrow: ");
             int response = int.Parse(Console.ReadLine());
             user.AddMovieLoan(Globals.ListOfMovies.MovieList[response].MovieTitle);
+        }
+
+        public static void ReturnMovie()
+        {
+            Console.Clear();
+            // TODO: Update the Movie's Copy Count
+            Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
+            if (user.CurrentLoans().Length == 0)
+            {
+                Console.WriteLine("You have not borrowed any movies. Please borrow one before you can return them.");
+            } else
+            {
+                ListBorrowedMovies();
+                Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
+                Console.Write("Please enter the ID of the movie you would like to return: ");
+                int response = int.Parse(Console.ReadLine());
+                user.DelMovieLoan(response);
+            }
+            
         }
 
         public static void ListBorrowedMovies()
