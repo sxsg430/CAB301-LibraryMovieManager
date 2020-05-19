@@ -187,8 +187,8 @@ namespace CAB302_LibraryMovieManager
             }
             catch
             {
-                Console.WriteLine("Invalid Genre.");
-                Console.ReadLine();
+                Console.WriteLine("Invalid Genre. Defaulting to Other.");
+                newMovie.MovieGenre = Movie.Genre.Other;
             }
             try
             {
@@ -198,8 +198,8 @@ namespace CAB302_LibraryMovieManager
             }
             catch
             {
-                Console.WriteLine("Invalid Classification.");
-                Console.ReadLine();
+                Console.WriteLine("Invalid Classification. Defaulting to General.");
+                newMovie.MovieRating = Movie.Classification.General;
             }
             Console.Write("Total Copies: ");
             newMovie.MovieCopies = int.Parse(Console.ReadLine());
