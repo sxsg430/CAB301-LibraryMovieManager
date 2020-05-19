@@ -81,14 +81,27 @@ namespace CAB302_LibraryMovieManager
 
         public static void BorrowNewMovie()
         {
-            ListAllMovies();
-            // TODO: Handle user trying to borrow a movie multiple times.
-            // TODO: Update the Movie's Copy Count
             Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
-            Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
-            Console.Write("Please enter the ID of the movie you would like to borrow: ");
-            int response = int.Parse(Console.ReadLine());
-            user.AddMovieLoan(Globals.ListOfMovies.MovieList[response].MovieTitle);
+            if (user.CurrentLoans().Length == 10)
+            {
+                Console.WriteLine("You have reached your limit of borrowed titles. Please return a movie before continuing.");
+            } else
+            {
+                ListAllMovies();
+                // TODO: Update the Movie's Copy Count
+                Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
+                Console.Write("Please enter the ID of the movie you would like to borrow: ");
+                int response = int.Parse(Console.ReadLine());
+                string MovieTitle = Globals.ListOfMovies.MovieList[response].MovieTitle;
+                if (user.CurrentLoans().Contains(MovieTitle))
+                {
+                    Console.WriteLine("You have already borrowed this movie.");
+                }
+                else
+                {
+                    user.AddMovieLoan(MovieTitle);
+                }
+            }
         }
 
         public static void ReturnMovie()
