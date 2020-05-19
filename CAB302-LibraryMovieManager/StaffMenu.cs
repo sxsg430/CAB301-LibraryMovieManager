@@ -15,6 +15,12 @@ namespace CAB302_LibraryMovieManager
             if (result == 1)
             {
                 Globals.ListOfMovies.AddNewMovie();
+                StaffMenuInit();
+            }
+            else if (result == 2)
+            {
+                Globals.ListOfMovies.RemoveMovieEntry();
+                StaffMenuInit();
             }
             else if (result == 3)
             {

@@ -84,8 +84,8 @@ namespace CAB302_LibraryMovieManager
         // Wrapper function for InOrderTransverse. Passes InOrderTransverse the root node.
         public void OrderTransverseInit()
         {
+            EmptyArray();
             InOrderTraverse(RootElement);
-            
         }
 
         // Completes an In Order Transverse on the BST.
@@ -94,15 +94,16 @@ namespace CAB302_LibraryMovieManager
             if (first != null) // If the provided node isn't null, continue.
             {
                 InOrderTraverse(first.LeftNode); // Recursively run InOrder on the left node.
+                //Console.WriteLine(first.DataNode.MovieTitle);
                 MovieList[FindFirstNull()] = first.DataNode; // Write the node's data to the first null object in the movie list.
                 InOrderTraverse(first.RightNode); // Recursively run InOrder on the right node.
             }
         }
 
         // Iterate over the BST and remove a specific movie element.
-        public void RemoveMovie(Movie item)
+        private void RemoveMovie(Movie item)
         {
-            MovieNode RootNode = RootElement; // Roto Node
+            MovieNode RootNode = RootElement; // Root Node
             MovieNode ParentNode = null; // Parent of Root. Initially set to null.
             while ((RootNode != null) && (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) != 0)) // While the Root Node isn't empty and the provided Movie's title doesn't equal the root one, continue loop.
             {
@@ -202,18 +203,30 @@ namespace CAB302_LibraryMovieManager
             }
             Console.Write("Total Copies: ");
             newMovie.MovieCopies = int.Parse(Console.ReadLine());
-            try
-            {
-                AddNewInit(newMovie);
-                Console.WriteLine("Add Successful");
-            } catch
-            {
-                Console.WriteLine("Add Failed");
-            }
-            
-
+            AddNewInit(newMovie);
             Console.ReadLine();
-            StaffMenu.StaffMenuInit();
+        }
+
+        public void RemoveMovieEntry()
+        {
+            // TODO: Implement checking if users have borrowed.
+            EmptyArray();
+            OrderTransverseInit();
+            Console.Clear();
+            Console.WriteLine("Available Movies:");
+            Console.WriteLine("-----------------");
+            for (int i = 0; i < MovieList.Length; i++)
+            {
+                Console.WriteLine(i + " - " + TextPosition(i));
+
+            }
+            Console.WriteLine("");
+            Console.Write("Please enter the ID of the movie you would like to remove: ");
+            int response = int.Parse(Console.ReadLine());
+            Movie chosenMovie = MovieList[response];
+            Console.WriteLine(chosenMovie.MovieTitle);
+            RemoveMovie(chosenMovie);
+            Console.ReadLine();
         }
 
         // Finds the first null value in the array of members. Null signifies no user in the slot so it should be overwritten.
@@ -234,9 +247,12 @@ namespace CAB302_LibraryMovieManager
         }
 
         // Clean and prepare the array. Unsure if required but at one stage the code needed it.
-        public void prepareArray()
+        public void EmptyArray()
         {
-            MovieList.Initialize();
+            for (int i = 0; i < MovieList.Length; i++)
+            {
+                MovieList[i] = null;
+            }
         }
 
         // DEBUG CODE: Returns the username of the given Member at the position, NULL if there is no user in the position.
