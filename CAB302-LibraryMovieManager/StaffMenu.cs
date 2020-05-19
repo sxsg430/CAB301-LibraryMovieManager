@@ -15,21 +15,29 @@ namespace CAB302_LibraryMovieManager
             if (result == 1)
             {
                 Globals.ListOfMovies.AddNewMovie();
+                Console.Write("Press Enter to Continue...");
+                Console.ReadLine();
                 StaffMenuInit();
             }
             else if (result == 2)
             {
                 Globals.ListOfMovies.RemoveMovieEntry();
+                Console.Write("Press Enter to Continue...");
+                Console.ReadLine();
                 StaffMenuInit();
             }
             else if (result == 3)
             {
                 Globals.ListOfMembers.RegisterNewUser();
+                Console.Write("Press Enter to Continue...");
+                Console.ReadLine();
                 StaffMenuInit();
             } else if (result == 4)
             {
                 Console.Clear();
                 SearchPhoneNumber();
+                Console.Write("Press Enter to Continue...");
+                Console.ReadLine();
             }
             else if (result == 0)
             {
@@ -72,7 +80,6 @@ namespace CAB302_LibraryMovieManager
                 Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
                 Console.WriteLine("Username: " + knownMember.GetUsername());
                 Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
-                Console.ReadLine();
                 StaffMenuInit();
 
             }

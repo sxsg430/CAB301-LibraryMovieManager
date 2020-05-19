@@ -204,7 +204,6 @@ namespace CAB302_LibraryMovieManager
             Console.Write("Total Copies: ");
             newMovie.MovieCopies = int.Parse(Console.ReadLine());
             AddNewInit(newMovie);
-            Console.ReadLine();
         }
 
         public void RemoveMovieEntry()
@@ -226,7 +225,6 @@ namespace CAB302_LibraryMovieManager
             Movie chosenMovie = MovieList[response];
             Console.WriteLine(chosenMovie.MovieTitle);
             RemoveMovie(chosenMovie);
-            Console.ReadLine();
         }
 
         // Finds the first null value in the array of members. Null signifies no user in the slot so it should be overwritten.

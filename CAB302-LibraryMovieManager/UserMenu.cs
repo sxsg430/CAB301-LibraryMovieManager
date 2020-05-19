@@ -15,24 +15,28 @@ namespace CAB302_LibraryMovieManager
             if (result == 1)
             {
                 ListAllMovies();
+                Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
                 UserMenuInit();
             }
             else if (result == 2)
             {
                 BorrowNewMovie();
+                Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
                 UserMenuInit();
             }
             else if (result == 3)
             {
                 ReturnMovie();
+                Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
                 UserMenuInit();
             }
             else if (result == 4)
             {
                 ListBorrowedMovies();
+                Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
                 UserMenuInit();
             }
@@ -100,6 +104,7 @@ namespace CAB302_LibraryMovieManager
                 else
                 {
                     user.AddMovieLoan(MovieTitle);
+                    Console.WriteLine("Movie Borrowed.");
                 }
             }
         }
@@ -119,6 +124,7 @@ namespace CAB302_LibraryMovieManager
                 Console.Write("Please enter the ID of the movie you would like to return: ");
                 int response = int.Parse(Console.ReadLine());
                 user.DelMovieLoan(response);
+                Console.WriteLine("Movie Returned");
             }
             
         }
