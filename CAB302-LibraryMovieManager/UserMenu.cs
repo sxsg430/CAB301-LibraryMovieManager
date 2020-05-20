@@ -14,7 +14,7 @@ namespace CAB302_LibraryMovieManager
             int result = UserMainMenu();
             if (result == 1)
             {
-                ListAllMovies();
+                ListAllMovieDetails();
                 Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
                 UserMenuInit();
@@ -140,6 +140,29 @@ namespace CAB302_LibraryMovieManager
                 if (user.CurrentLoans()[i] != null)
                 {
                     Console.WriteLine(i + " - " + user.CurrentLoans()[i]);
+                }
+
+            }
+        }
+
+        public static void ListAllMovieDetails()
+        {
+            Console.Clear();
+            Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
+            Console.WriteLine("Available Movies (" + user.CurrentLoans() + "/10 Loans Used):");
+            Console.WriteLine();
+            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++)
+            {
+                if (Globals.ListOfMovies.MovieList[i] != null)
+                {
+                    Console.WriteLine(i + ": " + Globals.ListOfMovies.MovieList[i].MovieTitle);
+                    Console.WriteLine("Starring: " + Globals.ListOfMovies.MovieList[i].MovieStarring);
+                    Console.WriteLine("Director: " + Globals.ListOfMovies.MovieList[i].MovieDirector);
+                    Console.WriteLine("Duration: " + Globals.ListOfMovies.MovieList[i].MovieDuration);
+                    Console.WriteLine("Genre: " + Globals.ListOfMovies.MovieList[i].MovieGenre);
+                    Console.WriteLine("Classification: " + Globals.ListOfMovies.MovieList[i].MovieRating);
+                    Console.WriteLine("Available Copies: " + Globals.ListOfMovies.MovieList[i].MovieCopies);
+                    Console.WriteLine();
                 }
 
             }
