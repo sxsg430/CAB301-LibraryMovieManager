@@ -136,12 +136,23 @@ namespace CAB302_LibraryMovieManager
         // Returns a Member object from the given position in the array.
         public Member GetMemberInfo(int id)
         {
-            return LibraryMembers[id];
+            if (LibraryMembers[id] == null)
+            {
+                return null;
+            } else
+            {
+                return LibraryMembers[id];
+            }
         }
 
         public void ReplaceMemberInfo(int id, Member memberInfo)
         {
             LibraryMembers[id] = memberInfo;
+        }
+
+        public Member[] ListOfRealMembers()
+        {
+            return LibraryMembers.Where(x => x != null).ToArray();
         }
     }
 }

@@ -181,6 +181,7 @@ namespace CAB302_LibraryMovieManager
             newMovie.MovieDuration = Console.ReadLine();
             try
             {
+                // TODO: Switch to using int
                 Console.Write("Genre: ");
                 string inputGen = Console.ReadLine();
                 newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
@@ -192,6 +193,7 @@ namespace CAB302_LibraryMovieManager
             }
             try
             {
+                // TODO: Switch to using int
                 Console.Write("Classification: ");
                 string inputClass = Console.ReadLine();
                 newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);

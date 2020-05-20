@@ -42,7 +42,10 @@ namespace CAB302_LibraryMovieManager
             }
             else if (result == 5)
             {
-                // Placeholder
+                TopTenMovies();
+                Console.Write("Press Enter to Continue...");
+                Console.ReadLine();
+                UserMenuInit();
             }
             else if (result == 0)
             {
@@ -60,7 +63,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("2. Borrow a movie DVD");
             Console.WriteLine("3. Return a movie DVD");
             Console.WriteLine("4. List current burrowed movie DVDs");
-            Console.WriteLine("5. Display top 10 must popular movies");
+            Console.WriteLine("5. Display top 10 most popular movies");
             Console.WriteLine("0. Return to main menu");
             Console.WriteLine("=================================");
             Console.Write("Please make a selection (1-5 or 0 to return to main menu): ");
@@ -166,6 +169,37 @@ namespace CAB302_LibraryMovieManager
                 }
 
             }
+        }
+
+/*        public static int FindFirstNull()
+        {
+            for (int i = 0; i < FullMovies.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+            {
+                if (FullMovies[i] == null)
+                {
+                    return i;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return -1;
+        }*/
+
+        public static List<string> FullMovies = new List<string>();
+        public static void TopTenMovies()
+        {
+            for (int i = 0; i<10; i++)
+            {
+                Member localMember = Globals.ListOfMembers.GetMemberInfo(i);
+                if (localMember != null)
+                {
+                    FullMovies.AddRange(localMember.CurrentLoans());
+                } 
+            }
+            string[] FullMovieLocal = FullMovies.ToArray();
+            // Build Insertion Sort Here
         }
     }
 }
