@@ -32,7 +32,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("================================");
             Console.WriteLine("");
             Console.Write("Please make a selection (1-2, or 0 to exit): ");
-            int result = int.Parse(Console.ReadLine());
+            int result = int.Parse(Console.ReadLine()); // TODO: Fix non-int issues
             return result;
         }
 

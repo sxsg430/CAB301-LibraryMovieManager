@@ -38,6 +38,7 @@ namespace CAB302_LibraryMovieManager
                 SearchPhoneNumber();
                 Console.Write("Press Enter to Continue...");
                 Console.ReadLine();
+                StaffMenuInit();
             }
             else if (result == 0)
             {
@@ -69,7 +70,6 @@ namespace CAB302_LibraryMovieManager
             {
                 Console.WriteLine("This number doesn't exist.");
                 Console.ReadLine();
-                StaffMenuInit();
             }
             else
             {
@@ -80,7 +80,6 @@ namespace CAB302_LibraryMovieManager
                 Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
                 Console.WriteLine("Username: " + knownMember.GetUsername());
                 Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
-                StaffMenuInit();
 
             }
         }

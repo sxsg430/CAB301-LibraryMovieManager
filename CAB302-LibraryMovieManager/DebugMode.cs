@@ -49,6 +49,16 @@ namespace CAB302_LibraryMovieManager
             movie2.MovieRating = Movie.Classification.General;
             movie2.MovieCopies = 3;
             Globals.ListOfMovies.AddNewInit(movie2);
+
+            Movie movie3 = new Movie();
+            movie3.MovieTitle = "Demo Movie #0";
+            movie3.MovieStarring = "Example Star";
+            movie3.MovieDirector = "Example Director";
+            movie3.MovieDuration = "1:33";
+            movie3.MovieGenre = Movie.Genre.Drama;
+            movie3.MovieRating = Movie.Classification.General;
+            movie3.MovieCopies = 3;
+            Globals.ListOfMovies.AddNewInit(movie3);
         }
     }
 }

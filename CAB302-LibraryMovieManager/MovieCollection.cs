@@ -216,14 +216,15 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("-----------------");
             for (int i = 0; i < MovieList.Length; i++)
             {
-                Console.WriteLine(i + " - " + TextPosition(i));
-
+                if (MovieList[i] != null)
+                {
+                    Console.WriteLine(i + " - " + TextPosition(i));
+                }
             }
             Console.WriteLine("");
             Console.Write("Please enter the ID of the movie you would like to remove: ");
             int response = int.Parse(Console.ReadLine());
             Movie chosenMovie = MovieList[response];
-            Console.WriteLine(chosenMovie.MovieTitle);
             RemoveMovie(chosenMovie);
         }
 
