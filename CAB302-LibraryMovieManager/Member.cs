@@ -47,6 +47,7 @@ namespace CAB302_LibraryMovieManager
         public void AddMovieLoan(string title)
         {
             MemberLoans[FindFirstNull()] = title;
+            Array.Sort(MemberLoans, (x, y) => String.Compare(x, y)); // Apply sorting to the loan list after adding. Fixes issues relating to the debug mode inserting out of order.
         }
 
         // Remove the title at a given position and reset it back to null
