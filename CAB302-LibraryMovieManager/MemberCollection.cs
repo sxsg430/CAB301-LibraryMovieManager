@@ -84,10 +84,17 @@ namespace CAB302_LibraryMovieManager
             Console.Write("Phone Number: ");
             newMember.MemberPhoneNumber = Console.ReadLine();
             Console.Write("Passcode: ");
-            newMember.MemberPasscode = int.Parse(Console.ReadLine());
+            string usrPwd = Console.ReadLine();
+            if (usrPwd.Length > 4)
+            {
+                usrPwd = usrPwd.Substring(0, 4);
+                Console.WriteLine("Entered Password is longer than 4 characters, trimming it.");
+            }
+            newMember.MemberPasscode = int.Parse(usrPwd);
+            
             // TODO: Trim PWD to 4 int
             AddNewMember(newMember);
-            Console.WriteLine("Registered: " + newMember.MemberFirstName + " " + newMember.MemberLastName + " - " + newMember.MemberPasscode);
+            Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
         }
         
         // Authenticates a user by taking in a username and password and sending them to the function which scans the array for matching credentials.
