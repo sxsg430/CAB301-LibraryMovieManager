@@ -171,11 +171,27 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
-/*        public static int FindFirstNull()
+        /*        public static int FindFirstNull()
+                {
+                    for (int i = 0; i < FullMovies.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+                    {
+                        if (FullMovies[i] == null)
+                        {
+                            return i;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    return -1;
+                }*/
+
+        private static int FindFirstNull(string[] array)
         {
-            for (int i = 0; i < FullMovies.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+            for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.
             {
-                if (FullMovies[i] == null)
+                if (array[i] == null)
                 {
                     return i;
                 }
@@ -185,8 +201,39 @@ namespace CAB302_LibraryMovieManager
                 }
             }
             return -1;
-        }*/
+        }
 
+        private static string[] quickSort(string[] array)
+        {
+            List<string> beforePivot = new List<string>();
+            List<string> Pivot = new List<string>();
+            List<string> afterPivot = new List<string>();
+
+            if (array.Length <= 1)
+            {
+                return array;
+            } else
+            {
+                string localPivot = array[0];
+                for (int i = 0; i< array.Length; i++)
+                {
+                    if (array[i].CompareTo(localPivot) < 0)
+                    {
+                        beforePivot.Add(array[i]);
+                    } else if (array[i].CompareTo(localPivot) > 0)
+                    {
+                        afterPivot.Add(array[i]);
+                    } else
+                    {
+                        Pivot.Add(array[i]);
+                    }
+                }
+                string[] runBefore = quickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
+                string[] runAfter = quickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
+
+                return runBefore.Concat(Pivot.Concat(runAfter)).ToArray();
+            }
+        }
         public static List<string> FullMovies = new List<string>();
         public static void TopTenMovies()
         {
@@ -199,7 +246,18 @@ namespace CAB302_LibraryMovieManager
                 } 
             }
             string[] FullMovieLocal = FullMovies.ToArray();
-            // Build Insertion Sort Here
+            string[] MovieQuicksort = quickSort(FullMovieLocal);
+            for (int i = 0; i < MovieQuicksort.Length; i++)
+            {
+                if (MovieQuicksort[i] != null)
+                {
+                    Console.WriteLine(MovieQuicksort[i]);
+                } else
+                {
+                    Console.WriteLine("Null");
+                }
+                
+            }
         }
     }
 }
