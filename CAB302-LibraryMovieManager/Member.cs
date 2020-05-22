@@ -52,6 +52,14 @@ namespace CAB302_LibraryMovieManager
         // Remove the title at a given position and reset it back to null
         public void DelMovieLoan(int position)
         {
+            string MovieNM = MemberLoans[position];
+            Movie respMovie = Globals.ListOfMovies.SearchByTitle(MovieNM);
+            if (respMovie != null)
+            {
+                Globals.ListOfMovies.RemoveMovie(respMovie);
+                respMovie.MovieCopies++;
+                Globals.ListOfMovies.AddNewInit(respMovie);
+            }
             MemberLoans[position] = null;
         }
     }

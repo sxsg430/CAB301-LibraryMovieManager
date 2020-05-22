@@ -95,19 +95,25 @@ namespace CAB302_LibraryMovieManager
             } else
             {
                 ListAllMovies();
-                // TODO: Update the Movie's Copy Count
-                // TODO: Update Borrowed count
                 Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
                 Console.Write("Please enter the ID of the movie you would like to borrow: ");
                 int response = int.Parse(Console.ReadLine());
-                string MovieTitle = Globals.ListOfMovies.MovieList[response].MovieTitle;
-                if (user.CurrentLoans().Contains(MovieTitle))
+                Movie respMovie = Globals.ListOfMovies.MovieList[response];
+                if (user.CurrentLoans().Contains(respMovie.MovieTitle))
                 {
                     Console.WriteLine("You have already borrowed this movie.");
                 }
+                else if (respMovie.MovieCopies == 0)
+                {
+                    Console.WriteLine("There are no copies of this movie available to borrow.");
+                }
                 else
                 {
-                    user.AddMovieLoan(MovieTitle);
+                    Globals.ListOfMovies.RemoveMovie(respMovie);
+                    respMovie.MovieCopies--;
+                    respMovie.MovieBorrowed++;
+                    Globals.ListOfMovies.AddNewInit(respMovie);
+                    user.AddMovieLoan(respMovie.MovieTitle);
                     Console.WriteLine("Movie Borrowed.");
                 }
             }

@@ -101,7 +101,7 @@ namespace CAB302_LibraryMovieManager
         }
 
         // Iterate over the BST and remove a specific movie element.
-        private void RemoveMovie(Movie item)
+        public void RemoveMovie(Movie item)
         {
             MovieNode RootNode = RootElement; // Root Node
             MovieNode ParentNode = null; // Parent of Root. Initially set to null.
@@ -269,6 +269,18 @@ namespace CAB302_LibraryMovieManager
             }
 
         }
-
+        public Movie SearchByTitle(string title)
+        {
+            for (int i = 0; i < FindFirstNull(); i++)
+            {
+                if (MovieList[i].MovieTitle.Equals(title)) {
+                    return MovieList[i];
+                } else
+                {
+                    continue;
+                }
+            }
+            return null;
+        }
     }
 }
