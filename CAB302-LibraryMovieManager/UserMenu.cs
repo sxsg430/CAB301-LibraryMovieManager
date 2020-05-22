@@ -207,12 +207,12 @@ namespace CAB302_LibraryMovieManager
             } else
             {
                 Movie localPivot = array[0]; // Define the first element as the initial pivot.
-                for (int i = 0; i< array.Length; i++)
+                for (int i = 0; i< array.Length; i++) // REVERSED - Reversed for decending order.
                 {
-                    if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) < 0) // If the title of the given element is before the pivot, add it to the before list.
+                    if (array[i].MovieBorrowed > localPivot.MovieBorrowed) // If the borrow count of the given element is after the pivot, add it to the before list.
                     {
                         beforePivot.Add(array[i]);
-                    } else if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) > 0) // If the title of the given element is after the pivot, add it to the after list.
+                    } else if (array[i].MovieBorrowed < localPivot.MovieBorrowed) // If the borrow count of the given element is before the pivot, add it to the after list.
                     {
                         afterPivot.Add(array[i]);
                     }
@@ -241,20 +241,15 @@ namespace CAB302_LibraryMovieManager
                 } 
             }
             Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray()); // Perform quicksort on the list of movies.
-            Dictionary<string, int> FilteredQuicksort = new Dictionary<string, int>(); // Construct a string,int dictionary for storing the movie title and borrow count.
-            
-            foreach (Movie mov in MovieQuicksort) // Iterate over Quicksorted movies store their title and borrowed count.
-            {
-                FilteredQuicksort.Add(mov.MovieTitle, mov.MovieBorrowed);
-            }
             Console.WriteLine("Top 10 Most Borrowed Movies");
+            Console.WriteLine("---------------------------");
             Console.WriteLine("Title         | Frequency"); // Adjusted for the Debug content
             int loopCount = 0;
-            foreach (KeyValuePair<string, int> movie in FilteredQuicksort.OrderByDescending(key => key.Value)) // Sort the Dictionary by the borrow count and display the first 10 elements.
+            foreach (Movie movie in MovieQuicksort) // Iterate Quicksorted movies and show the first 10.
             {
                 if (loopCount < 10)
                 {
-                    Console.WriteLine(movie.Key + " | " + movie.Value);
+                    Console.WriteLine(movie.MovieTitle + " | " + movie.MovieBorrowed);
                     loopCount++;
                 }
             }
