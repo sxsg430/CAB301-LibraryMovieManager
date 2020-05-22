@@ -173,22 +173,6 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
-        private static int FindFirstNull(string[] array)
-        {
-            for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.
-            {
-                if (array[i] == null)
-                {
-                    return i;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return -1;
-        }
-
         private static int FindFirstNullMov(Movie[] array)
         {
             for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.
@@ -204,66 +188,69 @@ namespace CAB302_LibraryMovieManager
             }
             return -1;
         }
-
+        // Quicksort sorting function.
         private static Movie[] QuickSort(Movie[] array)
         {
-            List<Movie> beforePivot = new List<Movie>();
+            List<Movie> beforePivot = new List<Movie>(); // Define lists of movies for storage.
             List<Movie> Pivot = new List<Movie>();
             List<Movie> afterPivot = new List<Movie>();
 
-            if (array.Length <= 1)
+            if (array.Length <= 1) // If array only has 1 element, just return it. No reason to sort a list with one element.
             {
                 return array;
             } else
             {
-                Movie localPivot = array[0];
+                Movie localPivot = array[0]; // Define the first element as the initial pivot.
                 for (int i = 0; i< array.Length; i++)
                 {
-                    if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) < 0)
+                    if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) < 0) // If the title of the given element is before the pivot, add it to the before list.
                     {
                         beforePivot.Add(array[i]);
-                    } else if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) > 0)
+                    } else if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) > 0) // If the title of the given element is after the pivot, add it to the after list.
                     {
                         afterPivot.Add(array[i]);
-                    } else
+                    }
+                    else // Otherwise add it to the pivot list.
                     {
                         Pivot.Add(array[i]);
                     }
                 }
-                Movie[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
-                Movie[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
+                Movie[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the before array, filtering out potential null values (potential sideeffect of my code).
+                Movie[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the after array, filtering out potential null values (potential sideeffect of my code).
 
-                return runBefore.Concat(Pivot.Concat(runAfter)).ToArray();
+                return runBefore.Concat(Pivot.Concat(runAfter)).ToArray(); // Concatenate the three lists together and convert to array.
             }
         }
-        public static List<Movie> FullMovies = new List<Movie>();
+        public static List<Movie> FullMovies = new List<Movie>(); // Define list for holding base movie objects.
         public static void TopTenMovies()
         {
-            Console.Clear();
+            Console.Clear(); // Clear screen and console.
             FullMovies.Clear();
-            for (int i = 0; i < FindFirstNullMov(Globals.ListOfMovies.MovieList); i++)
+            for (int i = 0; i < FindFirstNullMov(Globals.ListOfMovies.MovieList); i++) // Only loop for values less than the first null object.
             {
-                Movie localMovie = Globals.ListOfMovies.MovieList[i];
+                Movie localMovie = Globals.ListOfMovies.MovieList[i]; // Get the Movie object at the current position and add it to the list if it isn't null.
                 if (localMovie != null)
                 {
                     FullMovies.Add(localMovie);
                 } 
             }
-            Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray());
-            Dictionary<string, int> FilteredQuicksort = new Dictionary<string, int>();
+            Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray()); // Perform quicksort on the list of movies.
+            Dictionary<string, int> FilteredQuicksort = new Dictionary<string, int>(); // Construct a string,int dictionary for storing the movie title and borrow count.
+            
+            foreach (Movie mov in MovieQuicksort) // Iterate over Quicksorted movies store their title and borrowed count.
+            {
+                FilteredQuicksort.Add(mov.MovieTitle, mov.MovieBorrowed);
+            }
+            Console.WriteLine("Top 10 Most Borrowed Movies");
+            Console.WriteLine("Title         | Frequency"); // Adjusted for the Debug content
             int loopCount = 0;
-            foreach (Movie mov in MovieQuicksort)
+            foreach (KeyValuePair<string, int> movie in FilteredQuicksort.OrderByDescending(key => key.Value)) // Sort the Dictionary by the borrow count and display the first 10 elements.
             {
                 if (loopCount < 10)
                 {
-                    FilteredQuicksort.Add(mov.MovieTitle, mov.MovieBorrowed);
+                    Console.WriteLine(movie.Key + " | " + movie.Value);
                     loopCount++;
                 }
-                
-            }
-            foreach (KeyValuePair<string, int> movie in FilteredQuicksort.OrderByDescending(key => key.Value))
-            {
-                Console.WriteLine(movie.Key + " " + movie.Value);
             }
         }
     }
