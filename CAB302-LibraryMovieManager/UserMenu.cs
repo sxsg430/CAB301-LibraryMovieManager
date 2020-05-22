@@ -203,7 +203,7 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
-        private static string[] quickSort(string[] array)
+        private static string[] QuickSort(string[] array)
         {
             List<string> beforePivot = new List<string>();
             List<string> Pivot = new List<string>();
@@ -228,8 +228,8 @@ namespace CAB302_LibraryMovieManager
                         Pivot.Add(array[i]);
                     }
                 }
-                string[] runBefore = quickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
-                string[] runAfter = quickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
+                string[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
+                string[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
 
                 return runBefore.Concat(Pivot.Concat(runAfter)).ToArray();
             }
@@ -237,6 +237,8 @@ namespace CAB302_LibraryMovieManager
         public static List<string> FullMovies = new List<string>();
         public static void TopTenMovies()
         {
+            Console.Clear();
+            FullMovies.Clear();
             for (int i = 0; i<10; i++)
             {
                 Member localMember = Globals.ListOfMembers.GetMemberInfo(i);
@@ -246,17 +248,11 @@ namespace CAB302_LibraryMovieManager
                 } 
             }
             string[] FullMovieLocal = FullMovies.ToArray();
-            string[] MovieQuicksort = quickSort(FullMovieLocal);
-            for (int i = 0; i < MovieQuicksort.Length; i++)
+            string[] MovieQuicksort = QuickSort(FullMovieLocal);
+            Dictionary<string, int> FilteredQuicksort = MovieQuicksort.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+            foreach (KeyValuePair<string, int> movie in FilteredQuicksort.OrderByDescending(key => key.Value))
             {
-                if (MovieQuicksort[i] != null)
-                {
-                    Console.WriteLine(MovieQuicksort[i]);
-                } else
-                {
-                    Console.WriteLine("Null");
-                }
-                
+                Console.WriteLine(movie.Key + " " + movie.Value);
             }
         }
     }
