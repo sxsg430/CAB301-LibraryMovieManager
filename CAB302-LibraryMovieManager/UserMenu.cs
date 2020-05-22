@@ -96,6 +96,7 @@ namespace CAB302_LibraryMovieManager
             {
                 ListAllMovies();
                 // TODO: Update the Movie's Copy Count
+                // TODO: Update Borrowed count
                 Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
                 Console.Write("Please enter the ID of the movie you would like to borrow: ");
                 int response = int.Parse(Console.ReadLine());
@@ -158,34 +159,19 @@ namespace CAB302_LibraryMovieManager
             {
                 if (Globals.ListOfMovies.MovieList[i] != null)
                 {
-                    Console.WriteLine(i + ": " + Globals.ListOfMovies.MovieList[i].MovieTitle);
+                    Console.WriteLine(i+1 + ": " + Globals.ListOfMovies.MovieList[i].MovieTitle);
                     Console.WriteLine("Starring: " + Globals.ListOfMovies.MovieList[i].MovieStarring);
                     Console.WriteLine("Director: " + Globals.ListOfMovies.MovieList[i].MovieDirector);
                     Console.WriteLine("Duration: " + Globals.ListOfMovies.MovieList[i].MovieDuration);
                     Console.WriteLine("Genre: " + Globals.ListOfMovies.MovieList[i].MovieGenre);
                     Console.WriteLine("Classification: " + Globals.ListOfMovies.MovieList[i].MovieRating);
                     Console.WriteLine("Available Copies: " + Globals.ListOfMovies.MovieList[i].MovieCopies);
+                    Console.WriteLine("Total Borrowed: " + Globals.ListOfMovies.MovieList[i].MovieBorrowed);
                     Console.WriteLine();
                 }
 
             }
         }
-
-        /*        public static int FindFirstNull()
-                {
-                    for (int i = 0; i < FullMovies.Length; i++) // For each entry in the array, if it's contents in null return its ID.
-                    {
-                        if (FullMovies[i] == null)
-                        {
-                            return i;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                    return -1;
-                }*/
 
         private static int FindFirstNull(string[] array)
         {
@@ -203,24 +189,40 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
-        private static string[] QuickSort(string[] array)
+        private static int FindFirstNullMov(Movie[] array)
         {
-            List<string> beforePivot = new List<string>();
-            List<string> Pivot = new List<string>();
-            List<string> afterPivot = new List<string>();
+            for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+            {
+                if (array[i] == null)
+                {
+                    return i;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return -1;
+        }
+
+        private static Movie[] QuickSort(Movie[] array)
+        {
+            List<Movie> beforePivot = new List<Movie>();
+            List<Movie> Pivot = new List<Movie>();
+            List<Movie> afterPivot = new List<Movie>();
 
             if (array.Length <= 1)
             {
                 return array;
             } else
             {
-                string localPivot = array[0];
+                Movie localPivot = array[0];
                 for (int i = 0; i< array.Length; i++)
                 {
-                    if (array[i].CompareTo(localPivot) < 0)
+                    if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) < 0)
                     {
                         beforePivot.Add(array[i]);
-                    } else if (array[i].CompareTo(localPivot) > 0)
+                    } else if (array[i].MovieTitle.CompareTo(localPivot.MovieTitle) > 0)
                     {
                         afterPivot.Add(array[i]);
                     } else
@@ -228,28 +230,37 @@ namespace CAB302_LibraryMovieManager
                         Pivot.Add(array[i]);
                     }
                 }
-                string[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
-                string[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
+                Movie[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray();
+                Movie[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray();
 
                 return runBefore.Concat(Pivot.Concat(runAfter)).ToArray();
             }
         }
-        public static List<string> FullMovies = new List<string>();
+        public static List<Movie> FullMovies = new List<Movie>();
         public static void TopTenMovies()
         {
             Console.Clear();
             FullMovies.Clear();
-            for (int i = 0; i<10; i++)
+            for (int i = 0; i < FindFirstNullMov(Globals.ListOfMovies.MovieList); i++)
             {
-                Member localMember = Globals.ListOfMembers.GetMemberInfo(i);
-                if (localMember != null)
+                Movie localMovie = Globals.ListOfMovies.MovieList[i];
+                if (localMovie != null)
                 {
-                    FullMovies.AddRange(localMember.CurrentLoans());
+                    FullMovies.Add(localMovie);
                 } 
             }
-            string[] FullMovieLocal = FullMovies.ToArray();
-            string[] MovieQuicksort = QuickSort(FullMovieLocal);
-            Dictionary<string, int> FilteredQuicksort = MovieQuicksort.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+            Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray());
+            Dictionary<string, int> FilteredQuicksort = new Dictionary<string, int>();
+            int loopCount = 0;
+            foreach (Movie mov in MovieQuicksort)
+            {
+                if (loopCount < 10)
+                {
+                    FilteredQuicksort.Add(mov.MovieTitle, mov.MovieBorrowed);
+                    loopCount++;
+                }
+                
+            }
             foreach (KeyValuePair<string, int> movie in FilteredQuicksort.OrderByDescending(key => key.Value))
             {
                 Console.WriteLine(movie.Key + " " + movie.Value);

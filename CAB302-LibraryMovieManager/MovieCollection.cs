@@ -40,7 +40,7 @@ namespace CAB302_LibraryMovieManager
     class MovieCollection
     {
         public MovieNode RootElement { get; set; }
-        public Movie[] MovieList = new Movie[20]; // 20 movie max for testing.
+        public Movie[] MovieList = new Movie[100]; // 100 movie max for testing.
 
         // Add New Movie to the BST.
         private void AddNew(Movie item, MovieNode node)

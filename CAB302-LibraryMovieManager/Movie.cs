@@ -38,6 +38,8 @@ namespace CAB302_LibraryMovieManager
         public Genre MovieGenre { get; set; }
         public Classification MovieRating { get; set; }
         public int MovieCopies { get; set; }
+
+        public int MovieBorrowed { get; set; }
         // Obtain list of genres for displaying to users.
         public string ListOfGenres()
         {

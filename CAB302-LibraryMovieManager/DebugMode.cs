@@ -103,7 +103,7 @@ namespace CAB302_LibraryMovieManager
             member7.AddMovieLoan("Demo Movie #B");
             Globals.ListOfMembers.AddNewMember(member7);
         }
-        // Generate some example movies and add them to the movies list for testing purposes. Default to 6 max (minus ones already assigned).
+        // Generate some example movies and add them to the movies list for testing purposes.
         public static void FillDebugMovies()
         {
             Movie movie1 = new Movie();
@@ -114,6 +114,7 @@ namespace CAB302_LibraryMovieManager
             movie1.MovieGenre = Movie.Genre.Drama;
             movie1.MovieRating = Movie.Classification.General;
             movie1.MovieCopies = 3;
+            movie1.MovieBorrowed = 6;
             Globals.ListOfMovies.AddNewInit(movie1);
 
             Movie movie2 = new Movie();
@@ -124,6 +125,7 @@ namespace CAB302_LibraryMovieManager
             movie2.MovieGenre = Movie.Genre.Action;
             movie2.MovieRating = Movie.Classification.Mature;
             movie2.MovieCopies = 2;
+            movie2.MovieBorrowed = 4;
             Globals.ListOfMovies.AddNewInit(movie2);
 
             Movie movie3 = new Movie();
@@ -134,6 +136,7 @@ namespace CAB302_LibraryMovieManager
             movie3.MovieGenre = Movie.Genre.Adventure;
             movie3.MovieRating = Movie.Classification.MatureAccompanied;
             movie3.MovieCopies = 2;
+            movie3.MovieBorrowed = 4;
             Globals.ListOfMovies.AddNewInit(movie3);
 
             Movie movie4 = new Movie();
@@ -144,6 +147,7 @@ namespace CAB302_LibraryMovieManager
             movie4.MovieGenre = Movie.Genre.Animated;
             movie4.MovieRating = Movie.Classification.ParentalGuidance;
             movie4.MovieCopies = 3;
+            movie4.MovieBorrowed = 7;
             Globals.ListOfMovies.AddNewInit(movie4);
 
             Movie movie5 = new Movie();
@@ -154,6 +158,7 @@ namespace CAB302_LibraryMovieManager
             movie5.MovieGenre = Movie.Genre.Comedy;
             movie5.MovieRating = Movie.Classification.General;
             movie5.MovieCopies = 2;
+            movie5.MovieBorrowed = 6;
             Globals.ListOfMovies.AddNewInit(movie5);
 
             Movie movie6 = new Movie();
@@ -164,6 +169,7 @@ namespace CAB302_LibraryMovieManager
             movie6.MovieGenre = Movie.Genre.Drama;
             movie6.MovieRating = Movie.Classification.General;
             movie6.MovieCopies = 3;
+            movie6.MovieBorrowed = 3;
             Globals.ListOfMovies.AddNewInit(movie6);
 
             Movie movie7 = new Movie();
@@ -174,6 +180,7 @@ namespace CAB302_LibraryMovieManager
             movie7.MovieGenre = Movie.Genre.Family;
             movie7.MovieRating = Movie.Classification.General;
             movie7.MovieCopies = 4;
+            movie7.MovieBorrowed = 2;
             Globals.ListOfMovies.AddNewInit(movie7);
 
             Movie movie8 = new Movie();
@@ -184,6 +191,7 @@ namespace CAB302_LibraryMovieManager
             movie8.MovieGenre = Movie.Genre.Other;
             movie8.MovieRating = Movie.Classification.General;
             movie8.MovieCopies = 4;
+            movie8.MovieBorrowed = 3;
             Globals.ListOfMovies.AddNewInit(movie8);
 
             Movie movie9 = new Movie();
@@ -194,6 +202,7 @@ namespace CAB302_LibraryMovieManager
             movie9.MovieGenre = Movie.Genre.SciFi;
             movie9.MovieRating = Movie.Classification.General;
             movie9.MovieCopies = 3;
+            movie9.MovieBorrowed = 7;
             Globals.ListOfMovies.AddNewInit(movie9);
 
             Movie movie10 = new Movie();
@@ -204,6 +213,7 @@ namespace CAB302_LibraryMovieManager
             movie10.MovieGenre = Movie.Genre.SciFi;
             movie10.MovieRating = Movie.Classification.General;
             movie10.MovieCopies = 3;
+            movie10.MovieBorrowed = 8;
             Globals.ListOfMovies.AddNewInit(movie10);
 
             Movie movie11 = new Movie();
@@ -214,6 +224,7 @@ namespace CAB302_LibraryMovieManager
             movie11.MovieGenre = Movie.Genre.Drama;
             movie11.MovieRating = Movie.Classification.General;
             movie11.MovieCopies = 2;
+            movie11.MovieBorrowed = 4;
             Globals.ListOfMovies.AddNewInit(movie11);
         }
     }
