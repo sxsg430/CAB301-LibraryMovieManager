@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,55 +104,62 @@ namespace CAB302_LibraryMovieManager
         {
             MovieNode RootNode = RootElement; // Root Node
             MovieNode ParentNode = null; // Parent of Root. Initially set to null.
-            while ((RootNode != null) && (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) != 0)) // While the Root Node isn't empty and the provided Movie's title doesn't equal the root one, continue loop.
+            if (item == null)
             {
-                ParentNode = RootNode;
-                if (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) < 0) // If the provided title is earlier in the sequence than the root node, update RootNode to its Left Node. Otherwise update to Right.
-                    RootNode = RootNode.LeftNode;
-                else
-                    RootNode = RootNode.RightNode;
-            }
-
-            if (RootNode != null) // If RootNode isn't null (search ran successfully), continue.
+                Console.WriteLine("This movie does not exist");
+            } else
             {
-                if ((RootNode.LeftNode != null) && (RootNode.RightNode != null)) // If both nodes on the current root aren't empty, run the below code.
+                while ((RootNode != null) && (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) != 0)) // While the Root Node isn't empty and the provided Movie's title doesn't equal the root one, continue loop.
                 {
-                    if (RootNode.LeftNode.RightNode == null) // If the Right node of the Root's current Left node is empty, update the appropriate variables.
-                    {
-                        RootNode.DataNode = RootNode.LeftNode.DataNode;
-                        RootNode.LeftNode = RootNode.LeftNode.LeftNode;
-                    }
+                    ParentNode = RootNode;
+                    if (item.MovieTitle.CompareTo(RootNode.DataNode.MovieTitle) < 0) // If the provided title is earlier in the sequence than the root node, update RootNode to its Left Node. Otherwise update to Right.
+                        RootNode = RootNode.LeftNode;
                     else
+                        RootNode = RootNode.RightNode;
+                }
+
+                if (RootNode != null) // If RootNode isn't null (search ran successfully), continue.
+                {
+                    if ((RootNode.LeftNode != null) && (RootNode.RightNode != null)) // If both nodes on the current root aren't empty, run the below code.
                     {
-                        MovieNode LNode = RootNode.LeftNode;
-                        MovieNode LNodeParent = RootNode; // Set the Parent of Left Node to current Root Node
-                        while (LNode.RightNode != null) // While the right node of the current left node is null, reassign the parent node to the current left node and the Left Node to the current one's right node.
+                        if (RootNode.LeftNode.RightNode == null) // If the Right node of the Root's current Left node is empty, update the appropriate variables.
                         {
-                            LNodeParent = LNode;
-                            LNode = LNode.RightNode;
+                            RootNode.DataNode = RootNode.LeftNode.DataNode;
+                            RootNode.LeftNode = RootNode.LeftNode.LeftNode;
                         }
-                        RootNode.DataNode = LNode.DataNode; // Update the root's contents to the contents of the current Left Node
-                        LNodeParent.RightNode = LNode.LeftNode; // Update the parent of the current Left Node's right branch to the contents of the left node.
-                    }
-                }
-                else
-                {
-                    MovieNode ChildNode;
-                    if (RootNode.LeftNode != null) // If the left node of the root isn't null, assign the child node to it. Otherwise use Right
-                        ChildNode = RootNode.LeftNode;
-                    else
-                        ChildNode = RootNode.RightNode;
-
-                    if (RootNode == RootElement) // If the Root Node equals the one set in the main collection, reassign it to the Child Node.
-                        RootElement = ChildNode;
-                    else // Otherwise if the Root Node is the same as the parent's left, assign the parent's left to the Child. Otherwise assign the right.
-                    {
-                        if (RootNode == ParentNode.LeftNode)
-                            ParentNode.LeftNode = ChildNode;
                         else
-                            ParentNode.RightNode = ChildNode;
+                        {
+                            MovieNode LNode = RootNode.LeftNode;
+                            MovieNode LNodeParent = RootNode; // Set the Parent of Left Node to current Root Node
+                            while (LNode.RightNode != null) // While the right node of the current left node is null, reassign the parent node to the current left node and the Left Node to the current one's right node.
+                            {
+                                LNodeParent = LNode;
+                                LNode = LNode.RightNode;
+                            }
+                            RootNode.DataNode = LNode.DataNode; // Update the root's contents to the contents of the current Left Node
+                            LNodeParent.RightNode = LNode.LeftNode; // Update the parent of the current Left Node's right branch to the contents of the left node.
+                        }
+                    }
+                    else
+                    {
+                        MovieNode ChildNode;
+                        if (RootNode.LeftNode != null) // If the left node of the root isn't null, assign the child node to it. Otherwise use Right
+                            ChildNode = RootNode.LeftNode;
+                        else
+                            ChildNode = RootNode.RightNode;
+
+                        if (RootNode == RootElement) // If the Root Node equals the one set in the main collection, reassign it to the Child Node.
+                            RootElement = ChildNode;
+                        else // Otherwise if the Root Node is the same as the parent's left, assign the parent's left to the Child. Otherwise assign the right.
+                        {
+                            if (RootNode == ParentNode.LeftNode)
+                                ParentNode.LeftNode = ChildNode;
+                            else
+                                ParentNode.RightNode = ChildNode;
+                        }
                     }
                 }
+            
 
             }
         }
@@ -172,40 +178,71 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("Available Genres: " + newMovie.ListOfGenres());
             Console.WriteLine("Available Classification: " + newMovie.ListOfClassification());
             Console.Write("Title: ");
-            newMovie.MovieTitle = Console.ReadLine();
-            Console.Write("Starring: ");
-            newMovie.MovieStarring = Console.ReadLine();
-            Console.Write("Director: ");
-            newMovie.MovieDirector = Console.ReadLine();
-            Console.Write("Duration: ");
-            newMovie.MovieDuration = Console.ReadLine();
-            try
+            string title = Console.ReadLine();
+            Movie movSearch = SearchByTitle(title);
+            if (movSearch != null)
             {
-                // TODO: Switch to using int
-                Console.Write("Genre: ");
-                string inputGen = Console.ReadLine();
-                newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
+                if (movSearch.MovieTitle.Equals(title))
+                {
+                    Console.WriteLine("Another Movie already has this title.");
+                    Console.Write("How many additional copies do you want to add? ");
+                    int newCopy;
+                    int.TryParse(Console.ReadLine(), out newCopy);
+                    RemoveMovie(movSearch);
+                    Movie newMov = movSearch;
+
+                    newMov.MovieCopies = newMov.MovieCopies + newCopy;
+                    AddNewInit(newMov);
+                } else
+                {
+                    newMovie.MovieTitle = title;
+                    Console.Write("Starring: ");
+                    newMovie.MovieStarring = Console.ReadLine();
+                    Console.Write("Director: ");
+                    newMovie.MovieDirector = Console.ReadLine();
+                    Console.Write("Duration: ");
+                    newMovie.MovieDuration = Console.ReadLine();
+                    try
+                    {
+                        // TODO: Switch to using int
+                        Console.Write("Genre: ");
+                        string inputGen = Console.ReadLine();
+                        newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid Genre. Defaulting to Other.");
+                        newMovie.MovieGenre = Movie.Genre.Other;
+                    }
+                    try
+                    {
+                        // TODO: Switch to using int
+                        Console.Write("Classification: ");
+                        string inputClass = Console.ReadLine();
+                        newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Invalid Classification. Defaulting to General.");
+                        newMovie.MovieRating = Movie.Classification.General;
+                    }
+                    Console.Write("Total Copies: ");
+                    int copies;
+                    int.TryParse(Console.ReadLine(), out copies);
+                    if (copies > 0)
+                    {
+                        newMovie.MovieCopies = copies;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Copy Count provided. Defaulting to 6");
+                        newMovie.MovieCopies = 6;
+                    }
+
+                    newMovie.MovieBorrowed = 0;
+                    AddNewInit(newMovie);
+                }
             }
-            catch
-            {
-                Console.WriteLine("Invalid Genre. Defaulting to Other.");
-                newMovie.MovieGenre = Movie.Genre.Other;
-            }
-            try
-            {
-                // TODO: Switch to using int
-                Console.Write("Classification: ");
-                string inputClass = Console.ReadLine();
-                newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
-            }
-            catch
-            {
-                Console.WriteLine("Invalid Classification. Defaulting to General.");
-                newMovie.MovieRating = Movie.Classification.General;
-            }
-            Console.Write("Total Copies: ");
-            newMovie.MovieCopies = int.Parse(Console.ReadLine());
-            AddNewInit(newMovie);
         }
 
         public void RemoveMovieEntry()
@@ -256,7 +293,7 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
-        // DEBUG CODE: Returns the username of the given Member at the position, NULL if there is no user in the position.
+        
         public string TextPosition(int pos)
         {
             if (MovieList[pos] == null)
@@ -271,6 +308,7 @@ namespace CAB302_LibraryMovieManager
         }
         public Movie SearchByTitle(string title)
         {
+            OrderTransverseInit();
             for (int i = 0; i < FindFirstNull(); i++)
             {
                 if (MovieList[i].MovieTitle.Equals(title)) {
@@ -281,6 +319,11 @@ namespace CAB302_LibraryMovieManager
                 }
             }
             return null;
+        }
+        public Movie[] ListOfRealMovies()
+        {
+            OrderTransverseInit();
+            return MovieList.Where(x => x != null).ToArray();
         }
     }
 }

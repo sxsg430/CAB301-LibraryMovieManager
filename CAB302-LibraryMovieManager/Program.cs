@@ -51,6 +51,8 @@ namespace CAB302_LibraryMovieManager
                 string password = Console.ReadLine();
                 if (username.Equals("staff") && password.Equals("today123"))
                 {
+                    Console.Write("Login Successful. Press Enter to enter the Staff Menu...");
+                    Console.ReadLine();
                     StaffMenu.StaffMenuInit();
                 }
                 else
@@ -58,6 +60,7 @@ namespace CAB302_LibraryMovieManager
                     Console.WriteLine("Login Failed. The Credentials are incorrect.");
                     Console.Write("Press Enter to Continue...");
                     Console.ReadLine();
+                    MainMenuStart();
                 }
             }
             else if (mainMenuResult == 2)
@@ -74,6 +77,11 @@ namespace CAB302_LibraryMovieManager
                     Console.ReadLine();
                 }
                 
+            } else
+            {
+                Console.Write("This menu is invalid, try again.");
+                Console.ReadLine();
+                MainMenuStart();
             }
         }
 

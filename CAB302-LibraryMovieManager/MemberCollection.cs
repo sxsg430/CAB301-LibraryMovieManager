@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -28,7 +27,9 @@ namespace CAB302_LibraryMovieManager
                 for (int i = 0; i < FindFirstNull(); i++) // Iterate over members in array
                 {
                     Member select = LibraryMembers[i];
-                    if (select.GetUsername() == username && select.MemberPasscode == int.Parse(password))
+                    int passccode;
+                    int.TryParse(password, out passccode);
+                    if (select.GetUsername() == username && select.MemberPasscode == passccode)
                     { // If the current member's username and passcode match the ones provided return the position in the array. Continue otherwise.
                         return i;
                     }
@@ -84,17 +85,24 @@ namespace CAB302_LibraryMovieManager
             Console.Write("Phone Number: ");
             newMember.MemberPhoneNumber = Console.ReadLine();
             Console.Write("Passcode: ");
-            string usrPwd = Console.ReadLine();
-            if (usrPwd.Length > 4)
+            int userPwd;
+            int.TryParse(Console.ReadLine(), out userPwd);
+            if (userPwd.ToString().Length > 4)
             {
-                usrPwd = usrPwd.Substring(0, 4);
+                userPwd = int.Parse(userPwd.ToString().Substring(0, 4));
                 Console.WriteLine("Entered Password is longer than 4 characters, trimming it.");
             }
-            newMember.MemberPasscode = int.Parse(usrPwd);
+            newMember.MemberPasscode = userPwd;
             
-            // TODO: Trim PWD to 4 int
-            AddNewMember(newMember);
-            Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
+            if (SearchUsername(newMember.GetUsername()) == -1)
+            {
+                AddNewMember(newMember);
+                Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
+            } else
+            {
+                Console.WriteLine("A User with this username already exists.");
+            }
+            
         }
         
         // Authenticates a user by taking in a username and password and sending them to the function which scans the array for matching credentials.
@@ -121,6 +129,30 @@ namespace CAB302_LibraryMovieManager
                 } else
                 {
                     if (currentMember.MemberPhoneNumber == phone)
+                    {
+                        return i;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public int SearchUsername (string username)
+        {
+            for (int i = 0; i < LibraryMembers.Length; i++)
+            {
+                Member currentMember = LibraryMembers[i];
+                if (currentMember == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (currentMember.GetUsername() == username)
                     {
                         return i;
                     }

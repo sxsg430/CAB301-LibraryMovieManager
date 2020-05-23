@@ -43,6 +43,9 @@ namespace CAB302_LibraryMovieManager
             else if (result == 0)
             {
                 Program.MainMenuStart();
+            } else
+            {
+                StaffMenuInit();
             }
         }
 
@@ -68,18 +71,24 @@ namespace CAB302_LibraryMovieManager
             int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone);
             if (memberID == -1)
             {
-                Console.WriteLine("This number doesn't exist.");
-                Console.ReadLine();
+                Console.WriteLine("No user exists with this phone number.");
             }
             else
             {
                 Member knownMember = Globals.ListOfMembers.GetMemberInfo(memberID);
-                Console.Clear();
+                Console.WriteLine("");
+                Console.WriteLine("");
                 Console.WriteLine("Name: " + knownMember.MemberFirstName + " " + knownMember.MemberLastName);
                 Console.WriteLine("Address: " + knownMember.MemberAddress);
                 Console.WriteLine("Phone Number: " + knownMember.MemberPhoneNumber);
                 Console.WriteLine("Username: " + knownMember.GetUsername());
                 Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
+                string borrowedMovies = "";
+                for (int i = 0; i < knownMember.CurrentLoans().Length; i++)
+                {
+                    borrowedMovies = borrowedMovies + knownMember.CurrentLoans()[i] + ", ";
+                }
+                Console.WriteLine("Borrowed Movies: " + borrowedMovies);
 
             }
         }
