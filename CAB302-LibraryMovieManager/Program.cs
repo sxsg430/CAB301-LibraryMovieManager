@@ -21,9 +21,6 @@ namespace CAB302_LibraryMovieManager
         {
             Globals.CurrentUser = -1; // Reset CurrentUser to -1. If this menu is open, no user should be logged in.
             Console.Clear();
-            Console.WriteLine(Globals.ListOfMembers.TextPosition(0)); // DEBUG CODE
-            Globals.ListOfMovies.OrderTransverseInit();
-            Console.WriteLine(Globals.ListOfMovies.TextPosition(0)); // DEBUG CODE
             Console.WriteLine("Welcome to the Community Library");
             Console.WriteLine("===========Main Menu============");
             Console.WriteLine("1. Staff Login");

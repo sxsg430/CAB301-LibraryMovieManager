@@ -57,7 +57,6 @@ namespace CAB302_LibraryMovieManager
         public static int UserMainMenu()
         {
             Console.Clear();
-            Console.WriteLine(Globals.CurrentUser);
             Console.WriteLine("===========Member Menu===========");
             Console.WriteLine("1. Display all movies");
             Console.WriteLine("2. Borrow a movie DVD");
