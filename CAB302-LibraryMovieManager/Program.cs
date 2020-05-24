@@ -8,6 +8,9 @@ namespace CAB302_LibraryMovieManager
 {
     static class Globals
     {
+        // #################################################### //
+        // To disable debug users & movies, set DebugMode to 0. //
+        // #################################################### //
         public static int DebugMode = 1; // Controls Debug Mode. 1 fills users and movies for testing.
         public static MemberCollection ListOfMembers = new MemberCollection(); // Collection of Members
         public static MovieCollection ListOfMovies = new MovieCollection(); // Collection of Movies

@@ -211,20 +211,21 @@ namespace CAB302_LibraryMovieManager
 
             }
         }
-
+        public static int quickCount = 0;
         // Quicksort sorting function.
         private static Movie[] QuickSort(Movie[] array)
         {
             List<Movie> beforePivot = new List<Movie>(); // Define lists of movies for storage.
             List<Movie> Pivot = new List<Movie>();
             List<Movie> afterPivot = new List<Movie>();
-
+            Console.WriteLine(quickCount);
+            quickCount++;
             if (array.Length <= 1) // If array only has 1 element, just return it. No reason to sort a list with one element.
             {
                 return array;
             } else
             {
-                Movie localPivot = array[0]; // Define the first element as the initial pivot.
+                Movie localPivot = array[array.Length / 2]; // Define the middle element as the initial pivot.
                 for (int i = 0; i< array.Length; i++) // REVERSED - Reversed for decending order.
                 {
                     if (array[i].MovieBorrowed > localPivot.MovieBorrowed) // If the borrow count of the given element is after the pivot, add it to the before list.
@@ -248,7 +249,7 @@ namespace CAB302_LibraryMovieManager
         
         public static void TopTenMovies()
         {
-            Console.Clear(); // Clear screen and console.
+            //Console.Clear(); // Clear screen and console.
             Movie[] FullMovies = Globals.ListOfMovies.ListOfRealMovies(); // Define list for holding base movie objects.
             Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray()); // Perform quicksort on the list of movies.
             Console.WriteLine("Top 10 Most Borrowed Movies");
