@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -215,9 +214,9 @@ namespace CAB302_LibraryMovieManager
         // Quicksort sorting function.
         private static Movie[] QuickSort(Movie[] array)
         {
-            List<Movie> beforePivot = new List<Movie>(); // Define lists of movies for storage.
-            List<Movie> Pivot = new List<Movie>();
-            List<Movie> afterPivot = new List<Movie>();
+            Movie[] beforePivot = new Movie[100];
+            Movie[] Pivot = new Movie[100];
+            Movie[] afterPivot = new Movie[100];
             Console.WriteLine(quickCount);
             quickCount++;
             if (array.Length <= 1) // If array only has 1 element, just return it. No reason to sort a list with one element.
@@ -230,18 +229,18 @@ namespace CAB302_LibraryMovieManager
                 {
                     if (array[i].MovieBorrowed > localPivot.MovieBorrowed) // If the borrow count of the given element is after the pivot, add it to the before list.
                     {
-                        beforePivot.Add(array[i]);
+                        beforePivot[FindFirstNull(beforePivot)] = array[i];
                     } else if (array[i].MovieBorrowed < localPivot.MovieBorrowed) // If the borrow count of the given element is before the pivot, add it to the after list.
                     {
-                        afterPivot.Add(array[i]);
+                        afterPivot[FindFirstNull(afterPivot)] = array[i];
                     }
                     else // Otherwise add it to the pivot list.
                     {
-                        Pivot.Add(array[i]);
+                        Pivot[FindFirstNull(Pivot)] = array[i];
                     }
                 }
-                Movie[] runBefore = QuickSort(beforePivot.ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the before array, filtering out potential null values (potential sideeffect of my code).
-                Movie[] runAfter = QuickSort(afterPivot.ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the after array, filtering out potential null values (potential sideeffect of my code).
+                Movie[] runBefore = QuickSort(beforePivot.Where(x => x != null).ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the before array, filtering out potential null values (potential sideeffect of my code).
+                Movie[] runAfter = QuickSort(afterPivot.Where(x => x != null).ToArray()).Where(x => x != null).ToArray(); // Recursively call QuickSort on the after array, filtering out potential null values (potential sideeffect of my code).
 
                 return runBefore.Concat(Pivot.Concat(runAfter)).ToArray(); // Concatenate the three lists together and convert to array.
             }
@@ -264,6 +263,22 @@ namespace CAB302_LibraryMovieManager
                     loopCount++;
                 }
             }
+        }
+
+        private static int FindFirstNull(Movie[] array)
+        {
+            for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.
+            {
+                if (array[i] == null)
+                {
+                    return i;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return -1;
         }
     }
 }

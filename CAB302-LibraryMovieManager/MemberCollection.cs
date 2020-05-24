@@ -41,18 +41,6 @@ namespace CAB302_LibraryMovieManager
                 return -1;
             }
         }
-        // DEBUG CODE: Returns the username of the given Member at the position, NULL if there is no user in the position.
-        public string TextPosition(int pos)
-        {
-            if (LibraryMembers[pos] == null)
-            {
-                return "NULL";
-            } else
-            {
-                return LibraryMembers[pos].GetUsername();
-            }
-            
-        }
         // Finds the first null value in the array of members. Null signifies no user in the slot so it should be overwritten.
         private int FindFirstNull()
         {
@@ -72,37 +60,43 @@ namespace CAB302_LibraryMovieManager
         // Form for taking in user input and registering a new user.
         public void RegisterNewUser()
         {
-            Member newMember = new Member();
-            Console.Clear();
-            Console.WriteLine("Register a new Member");
-            Console.WriteLine("=====================");
-            Console.Write("First Name: ");
-            newMember.MemberFirstName = Console.ReadLine();
-            Console.Write("Last Name: ");
-            newMember.MemberLastName = Console.ReadLine();
-            Console.Write("Address: ");
-            newMember.MemberAddress = Console.ReadLine();
-            Console.Write("Phone Number: ");
-            newMember.MemberPhoneNumber = Console.ReadLine();
-            Console.Write("Passcode: ");
-            int userPwd;
-            int.TryParse(Console.ReadLine(), out userPwd);
-            if (userPwd.ToString().Length > 4)
+            if (FindFirstNull() == -1)
             {
-                userPwd = int.Parse(userPwd.ToString().Substring(0, 4));
-                Console.WriteLine("Entered Password is longer than 4 characters, trimming it.");
-            }
-            newMember.MemberPasscode = userPwd;
-            
-            if (SearchUsername(newMember.GetUsername()) == -1)
-            {
-                AddNewMember(newMember);
-                Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
+                Console.WriteLine("No more members can be registered.");
             } else
             {
-                Console.WriteLine("A User with this username already exists.");
+                Member newMember = new Member();
+                Console.Clear();
+                Console.WriteLine("Register a new Member");
+                Console.WriteLine("=====================");
+                Console.Write("First Name: ");
+                newMember.MemberFirstName = Console.ReadLine();
+                Console.Write("Last Name: ");
+                newMember.MemberLastName = Console.ReadLine();
+                Console.Write("Address: ");
+                newMember.MemberAddress = Console.ReadLine();
+                Console.Write("Phone Number: ");
+                newMember.MemberPhoneNumber = Console.ReadLine();
+                Console.Write("Passcode: ");
+                int userPwd;
+                int.TryParse(Console.ReadLine(), out userPwd);
+                if (userPwd.ToString().Length > 4)
+                {
+                    userPwd = int.Parse(userPwd.ToString().Substring(0, 4));
+                    Console.WriteLine("Entered Password is longer than 4 characters, trimming it.");
+                }
+                newMember.MemberPasscode = userPwd;
+
+                if (SearchUsername(newMember.GetUsername()) == -1)
+                {
+                    AddNewMember(newMember);
+                    Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
+                }
+                else
+                {
+                    Console.WriteLine("A User with this username already exists.");
+                }
             }
-            
         }
         
         // Authenticates a user by taking in a username and password and sending them to the function which scans the array for matching credentials.
