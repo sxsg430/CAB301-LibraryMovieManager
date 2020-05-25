@@ -158,7 +158,7 @@ namespace CAB302_LibraryMovieManager
                 {
                     int response;
                     int.TryParse(responseStr, out response);
-                    if (response > user.CurrentLoans().Length) // Catch inputs outside the range of the loan list.
+                    if (response > user.CurrentLoans().Length - 1) // Catch inputs outside the range of the loan list.
                     {
                         Console.WriteLine("Not a valid ID");
                     } else
