@@ -80,7 +80,7 @@ namespace CAB302_LibraryMovieManager
             AddNew(item, RootElement);
         }
 
-        // Wrapper function for InOrderTransverse. Passes InOrderTransverse the root node.
+        // Wrapper function for InOrderTransverse. Passes InOrderTransverse the root node. Empties array used to store the result of In Order Transverse due to previous issues with duplicating results.
         public void OrderTransverseInit()
         {
             EmptyArray();
@@ -175,79 +175,76 @@ namespace CAB302_LibraryMovieManager
         {
             Movie newMovie = new Movie();
             Console.Clear();
-            Console.WriteLine("Available Genres: " + newMovie.ListOfGenres());
+            Console.WriteLine("Available Genres: " + newMovie.ListOfGenres()); // Print out list of Genres and Ratings to provide user with acceptable inputs.
             Console.WriteLine("Available Classification: " + newMovie.ListOfClassification());
             Console.Write("Title: ");
             string title = Console.ReadLine();
             Movie movSearch = SearchByTitle(title);
-            if (movSearch != null)
+            if (movSearch != null) // If the title already exists in the movie BST, assume it is a duplicate.
             {
-                if (movSearch.MovieTitle.Equals(title))
+                if (movSearch.MovieTitle.Equals(title)) // Notify the user about the duplicate and ask them if they want to add additional copies to the movie.
                 {
                     Console.WriteLine("Another Movie already has this title.");
                     Console.Write("How many additional copies do you want to add? ");
                     int newCopy;
                     int.TryParse(Console.ReadLine(), out newCopy);
-                    RemoveMovie(movSearch);
+                    RemoveMovie(movSearch); // Remove old movie, update copy count and readd the movie.
                     Movie newMov = movSearch;
-
-                    newMov.MovieCopies = newMov.MovieCopies + newCopy;
+                    newMov.MovieCopies += newCopy;
                     AddNewInit(newMov);
-                } else
-                {
-                    newMovie.MovieTitle = title;
-                    Console.Write("Starring: ");
-                    newMovie.MovieStarring = Console.ReadLine();
-                    Console.Write("Director: ");
-                    newMovie.MovieDirector = Console.ReadLine();
-                    Console.Write("Duration: ");
-                    newMovie.MovieDuration = Console.ReadLine();
-                    try
-                    {
-                        // TODO: Switch to using int
-                        Console.Write("Genre: ");
-                        string inputGen = Console.ReadLine();
-                        newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Invalid Genre. Defaulting to Other.");
-                        newMovie.MovieGenre = Movie.Genre.Other;
-                    }
-                    try
-                    {
-                        // TODO: Switch to using int
-                        Console.Write("Classification: ");
-                        string inputClass = Console.ReadLine();
-                        newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Invalid Classification. Defaulting to General.");
-                        newMovie.MovieRating = Movie.Classification.General;
-                    }
-                    Console.Write("Total Copies: ");
-                    int copies;
-                    int.TryParse(Console.ReadLine(), out copies);
-                    if (copies > 0)
-                    {
-                        newMovie.MovieCopies = copies;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid Copy Count provided. Defaulting to 6");
-                        newMovie.MovieCopies = 6;
-                    }
-
-                    newMovie.MovieBorrowed = 0;
-                    AddNewInit(newMovie);
                 }
+            }
+            else
+            { // Otherwise assume it is a new movie and continue asking users for input.
+                newMovie.MovieTitle = title;
+                Console.Write("Starring: ");
+                newMovie.MovieStarring = Console.ReadLine();
+                Console.Write("Director: ");
+                newMovie.MovieDirector = Console.ReadLine();
+                Console.Write("Duration: ");
+                newMovie.MovieDuration = Console.ReadLine();
+                try
+                {
+                    Console.Write("Genre: ");
+                    string inputGen = Console.ReadLine();
+                    newMovie.MovieGenre = (Movie.Genre)Enum.Parse(typeof(Movie.Genre), inputGen, true);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid Genre. Defaulting to Other.");
+                    newMovie.MovieGenre = Movie.Genre.Other;
+                }
+                try
+                {
+                    Console.Write("Classification: ");
+                    string inputClass = Console.ReadLine();
+                    newMovie.MovieRating = (Movie.Classification)Enum.Parse(typeof(Movie.Classification), inputClass, true);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid Classification. Defaulting to General.");
+                    newMovie.MovieRating = Movie.Classification.General;
+                }
+                Console.Write("Total Copies: ");
+                int copies;
+                int.TryParse(Console.ReadLine(), out copies);
+                if (copies > 0) // If copy count is positive, set it. Otherwise default to 6 (my debug value). Used for handling improper (string) inputs in the copy field.
+                {
+                    newMovie.MovieCopies = copies;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Copy Count provided. Defaulting to 6");
+                    newMovie.MovieCopies = 6;
+                }
+
+                newMovie.MovieBorrowed = 0;
+                AddNewInit(newMovie);
             }
         }
 
         public void RemoveMovieEntry()
         {
-            // TODO: Implement checking if users have borrowed.
             EmptyArray();
             OrderTransverseInit();
             Console.Clear();
@@ -284,16 +281,16 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
-        // Clean and prepare the array. Unsure if required but at one stage the code needed it.
+        // Clean and prepare the array. Fixes some issues with duplicated results.
         public void EmptyArray()
         {
-            for (int i = 0; i < MovieList.Length; i++)
+            for (int i = 0; i < MovieList.Length; i++) // For all values in the Movie List array, rewrite them back to null.
             {
                 MovieList[i] = null;
             }
         }
 
-        
+        // Get the title of a movie at a given position. Has error handling for non-existent movies.
         public string TextPosition(int pos)
         {
             if (MovieList[pos] == null)
@@ -306,12 +303,14 @@ namespace CAB302_LibraryMovieManager
             }
 
         }
+
+        // Search array for a movie with a given title. If one is found, return the Movie object.
         public Movie SearchByTitle(string title)
         {
             OrderTransverseInit();
-            for (int i = 0; i < FindFirstNull(); i++)
+            for (int i = 0; i < FindFirstNull(); i++) // For all entries up to the first null value.
             {
-                if (MovieList[i].MovieTitle.Equals(title)) {
+                if (MovieList[i].MovieTitle.Equals(title)) { // If title equals the provided one, return the Movie object.
                     return MovieList[i];
                 } else
                 {
@@ -320,6 +319,8 @@ namespace CAB302_LibraryMovieManager
             }
             return null;
         }
+
+        // Return array of Movie objects with the null values removed.
         public Movie[] ListOfRealMovies()
         {
             OrderTransverseInit();

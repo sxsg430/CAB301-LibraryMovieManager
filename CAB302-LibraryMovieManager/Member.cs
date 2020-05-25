@@ -37,7 +37,7 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
-        public string[] CurrentLoans()
+        public string[] CurrentLoans() // Return an array of strings based on the contents of the master MemberLoans array but with any potential null entries removed.
         {
             string[] filteredLoans = MemberLoans.Where(x => x != null).ToArray();
             return filteredLoans;
@@ -46,17 +46,17 @@ namespace CAB302_LibraryMovieManager
         // Add a new title to the user's loan list.
         public void AddMovieLoan(string title)
         {
-            MemberLoans[FindFirstNull()] = title;
+            MemberLoans[FindFirstNull()] = title; // Find first entry in the MemberLoans array which is null and insert the movie into it.
         }
 
         // Remove the title at a given position and reset it back to null
         public void DelMovieLoan(int position)
         {
-            string MovieNM = MemberLoans[position];
-            Movie respMovie = Globals.ListOfMovies.SearchByTitle(MovieNM);
-            if (respMovie != null)
+            string MovieNM = MemberLoans[position]; // Obtain the title of the movie located at the given position in the loan list.
+            Movie respMovie = Globals.ListOfMovies.SearchByTitle(MovieNM); // Search the BST using the title to get the Movie object for the movie.
+            if (respMovie != null) // if the Movie object isn't null (null would signify the movie being removed from the master BST of movies by a staff member), continue.
             {
-                Globals.ListOfMovies.RemoveMovie(respMovie);
+                Globals.ListOfMovies.RemoveMovie(respMovie); // Remove the original movie from the BST, increase its available copy count by 1 and readd it to the BST.
                 respMovie.MovieCopies++;
                 Globals.ListOfMovies.AddNewInit(respMovie);
             }

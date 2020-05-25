@@ -32,7 +32,7 @@ namespace CAB302_LibraryMovieManager
             Console.WriteLine("================================");
             Console.WriteLine("");
             Console.Write("Please make a selection (1-2, or 0 to exit): ");
-            int result = int.Parse(Console.ReadLine()); // TODO: Fix non-int issues
+            int result = int.Parse(Console.ReadLine());
             return result;
         }
 
@@ -78,6 +78,7 @@ namespace CAB302_LibraryMovieManager
                     Console.WriteLine("Login Error. Credentials may be incorrect.");
                     Console.Write("Press Enter to Continue...");
                     Console.ReadLine();
+                    MainMenuStart();
                 }
                 
             } else

@@ -60,7 +60,7 @@ namespace CAB302_LibraryMovieManager
         // Form for taking in user input and registering a new user.
         public void RegisterNewUser()
         {
-            if (FindFirstNull() == -1)
+            if (FindFirstNull() == -1) // If the member array is full (no more null values available to overwrite), block new registrations.
             {
                 Console.WriteLine("No more members can be registered.");
             } else
@@ -79,20 +79,20 @@ namespace CAB302_LibraryMovieManager
                 newMember.MemberPhoneNumber = Console.ReadLine();
                 Console.Write("Passcode: ");
                 int userPwd;
-                int.TryParse(Console.ReadLine(), out userPwd);
-                if (userPwd.ToString().Length > 4)
+                int.TryParse(Console.ReadLine(), out userPwd); // Convert user passcode to integer, removing non-int characters in the process
+                if (userPwd.ToString().Length > 4) // If converted code is longer than 4 characters, truncate it.
                 {
                     userPwd = int.Parse(userPwd.ToString().Substring(0, 4));
                     Console.WriteLine("Entered Password is longer than 4 characters, trimming it.");
                 }
                 newMember.MemberPasscode = userPwd;
 
-                if (SearchUsername(newMember.GetUsername()) == -1)
+                if (SearchUsername(newMember.GetUsername()) == -1) // If the username doesn't already exist, add it.
                 {
                     AddNewMember(newMember);
                     Console.WriteLine("Registered: " + newMember.GetUsername() + " - " + newMember.MemberPasscode);
                 }
-                else
+                else // If username does exist, block registration since another member with the same name is already registered.
                 {
                     Console.WriteLine("A User with this username already exists.");
                 }
@@ -107,14 +107,14 @@ namespace CAB302_LibraryMovieManager
             Console.Write("Password: ");
             string password = Console.ReadLine();
 
-            int LoginCheck = Globals.ListOfMembers.FindMemberByUsername(username, password);
+            int LoginCheck = FindMemberByUsername(username, password); // Search to find a member with a given username and password and return the result.
             return LoginCheck;
         }
 
         // Searches the array for a Member object containing a specific phone number, returns its position in the array if one is found.
         public int SearchPhoneNumber(string phone)
         {
-            for (int i = 0; i < LibraryMembers.Length; i++)
+            for (int i = 0; i < LibraryMembers.Length; i++) // Iterate over full list of members.
             {
                 Member currentMember = LibraryMembers[i];
                 if (currentMember == null)
@@ -122,7 +122,7 @@ namespace CAB302_LibraryMovieManager
                     return -1;
                 } else
                 {
-                    if (currentMember.MemberPhoneNumber == phone)
+                    if (currentMember.MemberPhoneNumber == phone) // If the current member's phone number equals the provided one, return their array position.
                     {
                         return i;
                     }
@@ -135,6 +135,7 @@ namespace CAB302_LibraryMovieManager
             return -1;
         }
 
+        // Search through the array of members and return the ID of a user with a given username. Used to check for duplicates.
         public int SearchUsername (string username)
         {
             for (int i = 0; i < LibraryMembers.Length; i++)
@@ -146,7 +147,7 @@ namespace CAB302_LibraryMovieManager
                 }
                 else
                 {
-                    if (currentMember.GetUsername() == username)
+                    if (currentMember.GetUsername() == username) // If the current member's username matches the given one, return their array position.
                     {
                         return i;
                     }
@@ -169,16 +170,6 @@ namespace CAB302_LibraryMovieManager
             {
                 return LibraryMembers[id];
             }
-        }
-
-        public void ReplaceMemberInfo(int id, Member memberInfo)
-        {
-            LibraryMembers[id] = memberInfo;
-        }
-
-        public Member[] ListOfRealMembers()
-        {
-            return LibraryMembers.Where(x => x != null).ToArray();
         }
     }
 }

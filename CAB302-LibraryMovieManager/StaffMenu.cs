@@ -68,12 +68,12 @@ namespace CAB302_LibraryMovieManager
         {
             Console.Write("Enter a Phone Number: ");
             string phone = Console.ReadLine();
-            int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone);
-            if (memberID == -1)
+            int memberID = Globals.ListOfMembers.SearchPhoneNumber(phone); // Search Member array for the phone number.
+            if (memberID == -1) // If -1 returned, no users have this number.
             {
                 Console.WriteLine("No user exists with this phone number.");
             }
-            else
+            else // Print out information about the known member. If multiple users share the number, the earliest one in the array will be returned.
             {
                 Member knownMember = Globals.ListOfMembers.GetMemberInfo(memberID);
                 Console.WriteLine("");
@@ -84,12 +84,11 @@ namespace CAB302_LibraryMovieManager
                 Console.WriteLine("Username: " + knownMember.GetUsername());
                 Console.WriteLine("Passcode: " + knownMember.MemberPasscode);
                 string borrowedMovies = "";
-                for (int i = 0; i < knownMember.CurrentLoans().Length; i++)
+                for (int i = 0; i < knownMember.CurrentLoans().Length; i++) // Convert the array of borrowed movies to a string.
                 {
                     borrowedMovies = borrowedMovies + knownMember.CurrentLoans()[i] + ", ";
                 }
                 Console.WriteLine("Borrowed Movies: " + borrowedMovies);
-
             }
         }
     }

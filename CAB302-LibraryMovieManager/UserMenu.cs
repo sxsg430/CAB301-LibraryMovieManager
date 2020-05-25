@@ -79,7 +79,7 @@ namespace CAB302_LibraryMovieManager
             Globals.ListOfMovies.OrderTransverseInit();
             Console.WriteLine("Available Movies:");
             Console.WriteLine("-----------------");
-            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++)
+            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++) // For all non-null movies in the In Order Sorted array, print their position and title.
             {
                 if (Globals.ListOfMovies.MovieList[i] != null)
                 {
@@ -89,19 +89,20 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
+        // Borrows a movie from a list and adds it to the user's data.
         public static void BorrowNewMovie()
         {
             Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
-            if (user.CurrentLoans().Length == 1)
+            if (user.CurrentLoans().Length == 10) // If the user's borrow list is 10 (the max), block any new loans.
             {
                 Console.WriteLine("You have reached your limit of borrowed titles. Please return a movie before continuing.");
             } else
             {
                 ListAllMovies();
-                Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
+                Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans."); // Print out how many loans the user has remaining.
                 Console.Write("Please enter the ID of the movie you would like to borrow: ");
                 string respInput = Console.ReadLine();
-                if (Regex.IsMatch(respInput, @"^\d+$") == false)
+                if (Regex.IsMatch(respInput, @"^\d+$") == false) // Regex to catch non-numerical inputs and return an error message.
                 {
                     Console.WriteLine("Not a valid ID");
                 } else
@@ -111,17 +112,17 @@ namespace CAB302_LibraryMovieManager
                     Movie respMovie = Globals.ListOfMovies.MovieList[response];
                     if (respMovie != null)
                     {
-                        if (user.CurrentLoans().Contains(respMovie.MovieTitle))
+                        if (user.CurrentLoans().Contains(respMovie.MovieTitle)) // If User's borrowed list already contains this movie, return an error.
                         {
                             Console.WriteLine("You have already borrowed this movie.");
                         }
-                        else if (respMovie.MovieCopies == 0)
+                        else if (respMovie.MovieCopies == 0) // If no copies are available, return an error.
                         {
                             Console.WriteLine("There are no copies of this movie available to borrow.");
                         }
                         else
                         {
-                            Globals.ListOfMovies.RemoveMovie(respMovie);
+                            Globals.ListOfMovies.RemoveMovie(respMovie); // Remove the old copy of the movie from the BST, decrease its copy count, increase its borrow frequency and add it back to the BST and member's loan list.
                             respMovie.MovieCopies--;
                             respMovie.MovieBorrowed++;
                             Globals.ListOfMovies.AddNewInit(respMovie);
@@ -136,32 +137,33 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
+        // Return a movie a user has borrowed.
         public static void ReturnMovie()
         {
             Console.Clear();
             Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
-            if (user.CurrentLoans().Length == 0)
+            if (user.CurrentLoans().Length == 0) // If user hasn't borrowed any movies, return an error.
             {
                 Console.WriteLine("You have not borrowed any movies. Please borrow one before you can return them.");
             } else
             {
-                ListBorrowedMovies();
+                ListBorrowedMovies(); // Display list of borrowed movies and the total current loans.
                 Console.WriteLine("You have used " + user.CurrentLoans().Length + " of your 10 loans.");
                 Console.Write("Please enter the ID of the movie you would like to return: ");
                 string responseStr = Console.ReadLine();
-                if (Regex.IsMatch(responseStr, @"^\d+$") == false)
+                if (Regex.IsMatch(responseStr, @"^\d+$") == false) // Regex to check for non-int characters, return an error if any found.
                 {
                     Console.WriteLine("Not a valid ID");
                 } else
                 {
                     int response;
                     int.TryParse(responseStr, out response);
-                    if (response > user.CurrentLoans().Length)
+                    if (response > user.CurrentLoans().Length) // Catch inputs outside the range of the loan list.
                     {
                         Console.WriteLine("Not a valid ID");
                     } else
                     {
-                        user.DelMovieLoan(response);
+                        user.DelMovieLoan(response); // Return the movie.
                         Console.WriteLine("Movie Returned");
                     }
                 }
@@ -170,6 +172,7 @@ namespace CAB302_LibraryMovieManager
             
         }
 
+        // Generate and display a list of borrowed movies for a given user.
         public static void ListBorrowedMovies()
         {
             Console.Clear();
@@ -186,18 +189,19 @@ namespace CAB302_LibraryMovieManager
             }
         }
 
+        // List the detais of all movies.
         public static void ListAllMovieDetails()
         {
             Console.Clear();
-            Globals.ListOfMovies.OrderTransverseInit();
+            Globals.ListOfMovies.OrderTransverseInit(); // Generate the In Order Transverse array.
             Member user = Globals.ListOfMembers.GetMemberInfo(Globals.CurrentUser);
-            Console.WriteLine("Available Movies (" + user.CurrentLoans() + "/10 Loans Used):");
+            Console.WriteLine("Available Movies (" + user.CurrentLoans().Length + "/10 Loans Used):");
             Console.WriteLine();
-            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++)
+            for (int i = 0; i < Globals.ListOfMovies.MovieList.Length; i++) // For all non-null movies in the array, print out all their infomation.
             {
                 if (Globals.ListOfMovies.MovieList[i] != null)
                 {
-                    Console.WriteLine(i+1 + ": " + Globals.ListOfMovies.MovieList[i].MovieTitle);
+                    Console.WriteLine(Globals.ListOfMovies.MovieList[i].MovieTitle);
                     Console.WriteLine("Starring: " + Globals.ListOfMovies.MovieList[i].MovieStarring);
                     Console.WriteLine("Director: " + Globals.ListOfMovies.MovieList[i].MovieDirector);
                     Console.WriteLine("Duration: " + Globals.ListOfMovies.MovieList[i].MovieDuration);
@@ -210,15 +214,12 @@ namespace CAB302_LibraryMovieManager
 
             }
         }
-        public static int quickCount = 0;
         // Quicksort sorting function.
         private static Movie[] QuickSort(Movie[] array)
         {
-            Movie[] beforePivot = new Movie[100];
+            Movie[] beforePivot = new Movie[100]; // Using 100 max size for these arrays for testing since the rest of the code only allows less movies. Means I don't have to use any generic/list elements.
             Movie[] Pivot = new Movie[100];
             Movie[] afterPivot = new Movie[100];
-            Console.WriteLine(quickCount);
-            quickCount++;
             if (array.Length <= 1) // If array only has 1 element, just return it. No reason to sort a list with one element.
             {
                 return array;
@@ -246,25 +247,22 @@ namespace CAB302_LibraryMovieManager
             }
         }
         
+        // Main function for sorting the Top 10 Borrowed Movies.
         public static void TopTenMovies()
         {
-            //Console.Clear(); // Clear screen and console.
+            Console.Clear(); // Clear screen and console.
             Movie[] FullMovies = Globals.ListOfMovies.ListOfRealMovies(); // Define list for holding base movie objects.
-            Movie[] MovieQuicksort = QuickSort(FullMovies.ToArray()); // Perform quicksort on the list of movies.
+            Movie[] MovieQuicksort = QuickSort(FullMovies); // Perform quicksort on the list of movies.
             Console.WriteLine("Top 10 Most Borrowed Movies");
             Console.WriteLine("---------------------------");
             Console.WriteLine("Title         | Frequency"); // Adjusted for the Debug content
-            int loopCount = 0;
-            foreach (Movie movie in MovieQuicksort) // Iterate Quicksorted movies and show the first 10.
+            for (int i = 0; i < 10; i++)
             {
-                if (loopCount < 10)
-                {
-                    Console.WriteLine(movie.MovieTitle + " | " + movie.MovieBorrowed);
-                    loopCount++;
-                }
+                Console.WriteLine(MovieQuicksort[i].MovieTitle + " | " + MovieQuicksort[i].MovieBorrowed);
             }
         }
 
+        // Another function for checking for the first null value.
         private static int FindFirstNull(Movie[] array)
         {
             for (int i = 0; i < array.Length; i++) // For each entry in the array, if it's contents in null return its ID.

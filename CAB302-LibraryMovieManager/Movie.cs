@@ -38,13 +38,13 @@ namespace CAB302_LibraryMovieManager
         public Genre MovieGenre { get; set; }
         public Classification MovieRating { get; set; }
         public int MovieCopies { get; set; }
-
         public int MovieBorrowed { get; set; }
+
         // Obtain list of genres for displaying to users.
         public string ListOfGenres()
         {
             string genres = "";
-            foreach (string i in Enum.GetNames(typeof(Genre)))
+            foreach (string i in Enum.GetNames(typeof(Genre))) // Convert names of enum values into strings and append them to the main string to be returned.
             {
                 genres = genres + i + " ";
             }
@@ -54,7 +54,7 @@ namespace CAB302_LibraryMovieManager
         public string ListOfClassification()
         {
             string genres = "";
-            foreach (string i in Enum.GetNames(typeof(Classification)))
+            foreach (string i in Enum.GetNames(typeof(Classification))) // Convert names of enum values into strings and append them to the main string to be returned.
             {
                 genres = genres + i + " ";
             }
